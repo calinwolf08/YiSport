@@ -1,0 +1,97 @@
+.jumbotron {
+    background-color: #ad33ff;
+    color: #ffffff;
+    padding: 20px 25px;
+    margin-bottom: 0;
+}
+
+.cover-img {
+    background-image: url("../images/slideshow/pose.jpg");
+    background-size: cover;
+    padding: 15%;
+    height: 700px;
+}
+
+h1 {
+    font-family: Impact;
+    letter-spacing: 4px;
+    color: #8C489F;
+}
+
+p {
+    font-family: Verdana;
+    font-size: larger;
+}
+
+.pics-container {
+    position: relative;
+    max-width:  600px;
+    max-height: 600px;
+    background-repeat:   no-repeat;
+    background-color: black;
+    background-position: 50% 50%;
+    padding: 0%;
+    border: solid;
+    border-width: 5px;
+    border-color: black;
+    overflow: hidden;
+    display: table;
+    margin:0 auto;
+}
+
+.myText {
+    outline: #000 dotted;
+    position: relative;
+    top:10px;
+}
+
+.logo {
+    font-size: 200px;
+    color: #ad33ff;
+}
+
+#googleMap {
+    height: 400px;
+    width: 100%;
+}
+
+.container-fluid {
+    padding: 60px 50px;
+}
+
+@media screen and (max-width: 768px) {
+    .col-sm-4 {
+        text-align: center;
+        margin: 25px 0;
+    }
+}
+
+.navbar {
+    margin-bottom: 0;
+    background-color: #e6e6e6;
+    z-index: 9999;
+    border: 0;
+    font-size: 14px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+}
+
+.navbar li a, .navbar .navbar-brand {
+    color: #8C489F !important;
+}
+
+.navbar-nav li a:hover, .navbar-nav li.active a {
+    color: #ad33ff !important;
+    background-color: #fff !important;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: #8C489F !important;
+}
+
+#slide {
+    display: block;
+    margin: 0 auto;
+}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <!--
+  <div class="jumbotron text-center">
+    <h1>Yi Sport</h1>
+  </div>-->
+  <div >
+    <div class="jumbotron text-center cover-img"></div>
+
+    <div custom-layout>
+      <div>
+        {% include 'welcome.html' %}
+      </div>
+
+      <div>
+        {% include 'values.html' %}
+      </div>
+
+      <div>
+        {% include 'testemonials.html' %}
+      </div>
+
+      <div>
+        {% include 'news.html' %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
