@@ -1,17 +1,22 @@
 <div class="row">
-  <div class="col-sm-6" edit-field="valuesImg">
-      <div class="pics-container">
-        <img src="{{ url_for('static', filename="images/slideshow/kick.jpg") }}"
+  <div class="col-sm-6">
+      <div
+        {% if g.user.is_authenticated %}
+          edit-field tag="img" title="values" model="valuesImg"
+        {% endif %}
+        class="pics-container">
+        <img ng-src="{% raw %}{{ valuesImg }}{% endraw %}"
              class="my-img img-rounded img-responsive"/>
       </div>
   </div>
   <div class="col-sm-6">
       <h1>Values</h1>
-    <div class="container-fluid" >
-       <p>being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff
-      being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff
-      being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff
-      being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff being good and stuff </p>
+    <div
+      {% if g.user.is_authenticated %}
+        edit-field tag="text" title="values" model="valuesText"
+      {% endif %}
+      class="container-fluid">
+       <p ng-bind="valuesText"></p>
     </div>
   </div>
 </div>

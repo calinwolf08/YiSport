@@ -1,17 +1,21 @@
 <div class="row">
-  <div class="col-sm-6" edit-field="welcomeText" >
+  <div class="col-sm-6">
     <h1>Welcome</h1>
-    <div class="container-fluid" >
-      <p>Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are
-      Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are
-      Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are
-      Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are
-      Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are Who We Are</p>
+    <div
+        {% if g.user.is_authenticated %}
+          edit-field tag="text" title="welcome" model="welcomeText"
+        {% endif %}
+        class="container-fluid">
+      <p ng-bind="welcomeText"></p>
     </div>
   </div>
-  <div class="col-sm-6" edit-field="welcomeImg" >
-    <div class="pics-container" style="text-align: center">
-      <img src="{{ url_for('static', filename="images/slideshow/trophy.jpg") }}"
+  <div class="col-sm-6">
+    <div
+      {% if g.user.is_authenticated %}
+        edit-field tag="img" title="welcome" model="welcomeImg"
+      {% endif %}
+      class="pics-container">
+      <img ng-src="{% raw %}{{ welcomeImg }}{% endraw %}"
            class="my-img img-rounded img-responsive"/>
     </div>
   </div>

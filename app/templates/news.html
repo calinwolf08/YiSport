@@ -1,13 +1,21 @@
 <div class="row">
   <div class="col-sm-6 img-rounded">
     <h1>News</h1>
-    <div class="container-fluid" >
-      <p>practice happening etc</p>
+    <div
+      {% if g.user.is_authenticated %}
+        edit-field tag="text" title="testemonial" model="newsText"
+      {% endif %}
+      class="container-fluid">
+      <p ng-bind="newsText"></p>
     </div>
   </div>
   <div class="col-sm-6">
-    <div class="pics-container">
-      <img src="{{ url_for('static', filename="images/slideshow/trophy.jpg") }}"
+    <div
+      {% if g.user.is_authenticated %}
+        edit-field tag="text" title="testemonial" model="newsImg"
+      {% endif %}
+      class="pics-container">
+      <img ng-src="{% raw %}{{ newsImg }}{% endraw %}"
            class="my-img img-rounded img-responsive"/>
     </div>
   </div>

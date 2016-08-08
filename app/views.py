@@ -1,9 +1,10 @@
-from flask import render_template, request
+from flask import render_template, request, jsonify, json
 from flask import redirect, url_for, g, flash, session
 from flask_login import current_user, login_user, logout_user
 from flask_login import *
 from app import app, models, login_manager
 from .forms import LoginForm
+from playhouse.shortcuts import model_to_dict
 
 @login_manager.user_loader
 def load_user(id):
@@ -67,6 +68,7 @@ def login():
         session['remember_me'] = form.remember_me
         flash('Login requested for ' + form.email.data)
         try_login(form.email.data, form.password.data)
+
         return redirect(request.args.get('next') or url_for('index'))
 
     return render_template('login.html', form=form, title='Sign In')
@@ -75,3 +77,18 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route('/getposts', methods=['GET', 'POST'])
+def getPosts():
+    posts = []
+
+    tag = request.get_json().get('tag')
+
+    for post in  models.PagePost.select().where(models.PagePost.tag==tag and models.PagePost.active == True):
+        posts.append(model_to_dict(post))
+
+    return json.dumps(posts)
+
+@app.route('/editField.html', methods=['GET', 'POST'])
+def editField():
+    return render_template('editField.html')

@@ -1,29 +1,29 @@
 <h1 align="center">Parent Testemonials</h1>
 <div class="row" style="margin-top: 50px">
-  <div class="col-sm-4">
-    <p>
-    While I’m sure there are many caring coaches and instructors in Seattle, Yi Sport TKD stood out to my wife and I after watching our first class, and seeing the high level of instruction.  After seeing the Yi Sport team compete at a local Seattle Tae Kwon Do tournament, we haven’t looked back since and have no doubt about the choice we made for our kids.
-    </p>
-    <p>
-      - Graeme Gibson
-    </p>
+  <div
+    {% if g.user.is_authenticated %}
+      edit-field tag="testemonial" title="testemonial" model="testemonialOne"
+    {% endif %}
+    class="col-sm-4">
+    <p ng-bind="testemonialOne.text"></p>
+    <p>- {% raw %}{{ testemonialOne.author }}{% endraw %}</p>
   </div>
 
-  <div class="col-sm-4">
-    <p>
-      My son Dante has been with Yi Sports for over two years. He loves being a part of the team. I love it because Coach Lee’s practice focuses on fitness, respect and good sportsmanship. Not only will my son do well at Taekwondo he will excel at any sport he does because of the strength and fitness that Yi Sports is building in him.
-    </p>
-    <p>
-      - Parvana Saladino
-    </p>
+  <div
+    {% if g.user.is_authenticated %}
+      edit-field tag="testemonial" title="testemonial" model="testemonialTwo"
+    {% endif %}
+    class="col-sm-4">
+    <p ng-bind="testemonialTwo.text"> </p>
+    <p>- {% raw %}{{ testemonialTwo.author }}{% endraw %}</p>
   </div>
 
-  <div class="col-sm-4">
-    <p>
-      Definitively the best TKD school in Washington. Not just for Sport TKD but for conditioning of the mind and body for kids. One of my favorite aspects of the training are the life lessons that are taught at the end of every class. Respect, confidence, motivation, and self belief are the core teachings at Yi Sport TKD.
-    </p>
-    <p>
-      - Gene Shin
-    </p>
+  <div
+    {% if g.user.is_authenticated %}
+      edit-field tag="testemonial" title="testemonial" model="testemonialThree"
+    {% endif %}
+    class="col-sm-4">
+    <p ng-bind="testemonialThree.text"></p>
+    <p>- {% raw %}{{ testemonialThree.author }}{% endraw %}</p>
   </div>
 </div>

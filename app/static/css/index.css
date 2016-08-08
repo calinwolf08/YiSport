@@ -1,15 +1,11 @@
 .jumbotron {
-    background-color: #ad33ff;
     color: #ffffff;
     padding: 20px 25px;
     margin-bottom: 0;
-}
-
-.cover-img {
     background-image: url("../images/slideshow/pose.jpg");
     background-size: cover;
     padding: 15%;
-    height: 700px;
+    margin-top: 50px;
 }
 
 h1 {
@@ -21,6 +17,44 @@ h1 {
 p {
     font-family: Verdana;
     font-size: larger;
+}
+
+.editable {
+    position: relative;
+}
+
+.editable .icon {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.glyphicon-cog {
+    font-size: 1.6em;
+    color: #8C489F;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    visibility: hidden;
+}
+
+/* Centers modal vertically */
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
 }
 
 .pics-container {

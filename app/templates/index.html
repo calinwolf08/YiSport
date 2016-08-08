@@ -1,12 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <!--
-  <div class="jumbotron text-center">
-    <h1>Yi Sport</h1>
-  </div>-->
-  <div >
-    <div class="jumbotron text-center cover-img"></div>
+
+  <div ng-controller="indexController">
+    <div class="jumbotron cover-img"></div>
 
     <div custom-layout>
       <div>
@@ -26,4 +23,5 @@
       </div>
     </div>
   </div>
+
 {% endblock %}
