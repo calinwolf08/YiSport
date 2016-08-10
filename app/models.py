@@ -50,10 +50,10 @@ class BlogPost(Model):
 
 class PagePost(Model):
     post_id = PrimaryKeyField()
-    tag = CharField(max_length='100')               #identify which page
+    page = CharField(max_length='100')              #identify which page
     title = CharField(max_length='150')             #identify what field - welcome, news, etc
-    text = CharField(max_length='1500', null=True)
-    img = CharField(max_length='150', null=True)
+    tag = CharField(max_length='50')
+    text = CharField(max_length='1500', null=True)  #will be path if tag is image
     author = CharField(max_length='100', null=True)
     active = BooleanField(default=False)            #whether this is current active post
     date_created = DateTimeField(default=datetime.datetime.now)
@@ -66,22 +66,34 @@ if __name__ == '__main__':
     db.drop_tables([PagePost], safe = True)
     db.create_tables([PagePost], safe = True)
 
-    PagePost(tag="index", title="welcome",
-             text="welcome to yisport tkd", img="static/images/slideshow/kick.jpg",
+    PagePost(page="index", title="welcome", tag="text",
+             text="welcome to yisport tkd welcome to yisport tkd welcome to yisport tkd",
              active="true").save()
-    PagePost(tag="index", title="values",
-             text="being good and stuff", img="static/images/slideshow/bow.jpg",
+    PagePost(page="index", title="welcome", tag="image",
+             text = "static/images/slideshow/kick.jpg",
+             active = "true").save()
+
+    PagePost(page="index", title="values", tag="text",
+             text="being good and stuff", path="static/images/slideshow/bow.jpg",
              active="true").save()
-    PagePost(tag="index", title="news",
-             text="news, dates, etc", img="static/images/slideshow/trophy.jpg",
+    PagePost(page="index", title="values", tag="image",
+             text="static/images/slideshow/bow.jpg",
              active="true").save()
-    PagePost(tag="index", title="testemonialOne",
+
+    PagePost(page="index", title="news", tag="text",
+             text="news, dates, etc",
+             active="true").save()
+    PagePost(page="index", title="news", tag="image",
+             text="static/images/slideshow/trophy.jpg",
+             active="true").save()
+
+    PagePost(page="index", title="testemonial", tag="testemonial",
              text="While I’m sure there are many caring coaches and instructors in Seattle, Yi Sport TKD stood out to my wife and I after watching our first class, and seeing the high level of instruction.  After seeing the Yi Sport team compete at a local Seattle Tae Kwon Do tournament, we haven’t looked back since and have no doubt about the choice we made for our kids.",
              active="true", author="Graeme Gibson").save()
-    PagePost(tag="index", title="testemonialTwo",
+    PagePost(page="index", title="testemonial", tag="testemonial",
              text="My son Dante has been with Yi Sports for over two years. He loves being a part of the team. I love it because Coach Lee’s practice focuses on fitness, respect and good sportsmanship. Not only will my son do well at Taekwondo he will excel at any sport he does because of the strength and fitness that Yi Sports is building in him.",
              active="true", author="Parvana Saladino").save()
-    PagePost(tag="index", title="testemonialThree",
+    PagePost(page="index", title="testemonial", tag="testemonial",
              text="Definitively the best TKD school in Washington. Not just for Sport TKD but for conditioning of the mind and body for kids. One of my favorite aspects of the training are the life lessons that are taught at the end of every class. Respect, confidence, motivation, and self belief are the core teachings at Yi Sport TKD.",
              active="true", author="Gene Shin").save()
 

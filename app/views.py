@@ -78,14 +78,33 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/getposts', methods=['GET', 'POST'])
-def getPosts():
+@app.route('/getPostsByTag', methods=['GET', 'POST'])
+def getPostsByTag():
     posts = []
 
+    page = request.get_json().get('page')
+
+    for post in  models.PagePost.select().where(models.PagePost.page==page).where(models.PagePost.active == True):
+        posts.append(model_to_dict(post))
+
+    return json.dumps(posts)
+
+@app.route('/fetchPostsByTitle', methods=['GET', 'POST'])
+def fetchPostsByTitle():
+    posts = []
+
+    title = request.get_json().get('title')
     tag = request.get_json().get('tag')
 
-    for post in  models.PagePost.select().where(models.PagePost.tag==tag and models.PagePost.active == True):
+    for post in models.PagePost.select().where(models.PagePost.title == title).where(models.PagePost.tag == tag):
         posts.append(model_to_dict(post))
+
+    return json.dumps(posts)
+
+@app.route('/saveUpdatePosts', methods=['GET', 'POST'])
+def saveUpdatePosts():
+    posts = request.get_json().get('posts')
+    print(posts)
 
     return json.dumps(posts)
 

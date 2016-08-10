@@ -19,6 +19,14 @@ p {
     font-size: larger;
 }
 
+textarea {
+    resize: none;
+}
+
+.selected {
+    background-color: #d9b3ff;
+}
+
 .editable {
     position: relative;
 }
@@ -35,6 +43,16 @@ p {
     color: #8C489F;
     text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
     visibility: hidden;
+}
+
+.glyphicon-plus {
+    font-size: 1.6em;
+    color: #8C489F;
+}
+
+.glyphicon-minus {
+    font-size: 1.6em;
+    color: #8C489F;
 }
 
 /* Centers modal vertically */
@@ -91,6 +109,12 @@ p {
 
 .container-fluid {
     padding: 60px 50px;
+}
+
+@media screen and (min-width: 768px) {
+
+	.modal-dialog  {width:50%;}
+
 }
 
 @media screen and (max-width: 768px) {

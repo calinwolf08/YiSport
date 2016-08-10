@@ -1,20 +1,55 @@
-<span class="icon glyphicon glyphicon-cog"
-data-toggle="modal" data-target="#editFieldModal"></span>
+<span class="icon glyphicon glyphicon-cog" ng-click="loadPopupData()"></span>
 
-<div id="editFieldModal" class="modal fade" role="dialog">
+<div class="modal fade editFieldModal" role="dialog">
   <div class="modal-dialog">
-
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+        <h1 class="modal-title">{% raw %}{{ title | capitalize }}{% endraw %} Posts So Far</h1>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+        <p>Select a post to active it. Click the + to add a new post. Click - to remove new posts.</p>
+        <p>Click submit to save new posts.</p>
+        <div class="row">
+          <div class="container-fluid col-sm-9" ng-show="showNewPostField" style="padding-bottom: 15px;">
+            <textarea class="form-control newPost" rows="5" placeholder="Post"></textarea>
+          </div>
+          <div class="container-fluid col-sm-3" ng-show="showNewPostField" style="padding-bottom: 15px; padding-left: 0px">
+            <input ng-if="testemonialField" type="text" class="form-control newAuthor" placeholder="Author"/>
+            </br>
+            <button ng-click="addNewPost()" class="btn button-primary">Add Post</button>
+            <span ng-show="newPostError" class="label label-warning">Can't submit empty fields</span>
+          </div>
+        </div>
+        <div class="container-fluid pre-scrollable row" style="max-height: 450px;">
+          <div class="col-sm-11">
+            <table class="table">
+              <thead>
+                <th>Date Created</th>
+                <th>Value</th>
+                <th ng-if="testemonialField">Author</th>
+              </thead>
+              <tr ng-repeat="post in posts" ng-class="{selected: $index == selectedRow}" ng-click="toggleSelected($index)">
+                <td style="min-width: 150px" ng-bind="post.date_created | date : 'MM-dd-yyyy'"></td>
+
+                <td ng-bind="post.text"></td>
+
+                <td style="min-width: 150px" ng-if="testemonialField" ng-bind="post.author"></td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-sm-1">
+            </br>
+            </br>
+            <span ng-click="showNewPostField = true" class="glyphicon glyphicon-plus"></span>
+            <span ng-click="removeNewPosts()" class="glyphicon glyphicon-minus"></span>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" ng-click="removeNewPosts()" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="savePostChanges()" data-dismiss="modal">Submit</button>
       </div>
     </div>
   </div>

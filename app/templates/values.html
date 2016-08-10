@@ -2,7 +2,7 @@
   <div class="col-sm-6">
       <div
         {% if g.user.is_authenticated %}
-          edit-field tag="img" title="values" model="valuesImg"
+          edit-field tag="image" title="values" model="valuesImg"
         {% endif %}
         class="pics-container">
         <img ng-src="{% raw %}{{ valuesImg }}{% endraw %}"

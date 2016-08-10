@@ -19,15 +19,15 @@ function indexController($scope, postsService) {
 
     var fetchPosts = function () {
         param = {
-            tag: 'index'
+            page: 'index'
         };
 
-        postsService.fetchAllPosts(param).then(function (data) {
+        postsService.getPostsByTag(param).then(function (data) {
             if (data) {
                $scope.posts = data;
                 initializeTextFields();
             } else {
-                alert("error");
+                console.log("error");
             }
         });
     };
@@ -35,35 +35,40 @@ function indexController($scope, postsService) {
     fetchPosts();
 
     var initializeTextFields = function() {
-        console.log($scope.posts);
 
         for (var i=0; i<$scope.posts.length; i++) {
             var cur = $scope.posts[i];
 
             switch (cur.title) {
                 case 'welcome':
-                    $scope.welcomeText = cur.text;
-                    $scope.welcomeImg = cur.img;
+                    if (cur.tag == 'text')
+                        $scope.welcomeText = cur.text;
+                    else
+                        $scope.welcomeImg = cur.text;
                     break;
                 case 'values':
-                    $scope.valuesText = cur.text;
-                    $scope.valuesImg = cur.img;
+                    if (cur.tag == 'text')
+                        $scope.valuesText = cur.text;
+                    else
+                        $scope.valuesImg = cur.text;
                     break;
-                case 'testemonialOne':
-                    $scope.testemonialOne.text = cur.text;
-                    $scope.testemonialOne.author = cur.author;
-                    break;
-                case 'testemonialTwo':
-                    $scope.testemonialTwo.text = cur.text;
-                    $scope.testemonialTwo.author = cur.author;
-                    break;
-                case 'testemonialThree':
-                    $scope.testemonialThree.text = cur.text;
-                    $scope.testemonialThree.author = cur.author;
+                case 'testemonial':
+                    if ($scope.testemonialOne.text == '') {
+                        $scope.testemonialOne.text = cur.text;
+                        $scope.testemonialOne.author = cur.author;
+                    } else if ($scope.testemonialTwo.text == '') {
+                        $scope.testemonialTwo.text = cur.text;
+                        $scope.testemonialTwo.author = cur.author;
+                    } else if ($scope.testemonialThree.text == '') {
+                        $scope.testemonialThree.text = cur.text;
+                        $scope.testemonialThree.author = cur.author;
+                    }
                     break;
                 case 'news':
-                    $scope.newsText = cur.text;
-                    $scope.newsImg = cur.img;
+                    if (cur.tag == 'text')
+                        $scope.newsText = cur.text;
+                    else
+                        $scope.newsImg = cur.text;
                     break;
                 default:
                     console.log('Unknown Post: ' + cur);

@@ -3,7 +3,7 @@
     <h1>News</h1>
     <div
       {% if g.user.is_authenticated %}
-        edit-field tag="text" title="testemonial" model="newsText"
+        edit-field tag="text" title="news" model="newsText"
       {% endif %}
       class="container-fluid">
       <p ng-bind="newsText"></p>
@@ -12,7 +12,7 @@
   <div class="col-sm-6">
     <div
       {% if g.user.is_authenticated %}
-        edit-field tag="text" title="testemonial" model="newsImg"
+        edit-field tag="image" title="news" model="newsImg"
       {% endif %}
       class="pics-container">
       <img ng-src="{% raw %}{{ newsImg }}{% endraw %}"
