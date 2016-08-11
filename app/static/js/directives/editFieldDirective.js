@@ -28,6 +28,7 @@ function editField(postsService) {
                     scope.testemonialField = false;
 
                     scope.originalModel = scope.model;
+                    scope.originalPage = '';
 
                     if (scope.tag == 'text') {
                         scope.textField = true;
@@ -53,14 +54,15 @@ function editField(postsService) {
                     var setInitialActive = function(){
                         for (var i = 0; i < scope.posts.length; i++) {
                             if (scope.posts[i].active == true) {
+                                //save original page for new posts
+                                if (scope.originalPage == '') {
+                                    scope.originalPage = scope.posts[i].page;
+                                }
+
                                 var curVal = '';
                                 var curModel = '';
 
-                                if (scope.imageField) {
-                                    curVal = scope.posts[i].path;
-                                } else {
-                                    curVal = scope.posts[i].text;
-                                }
+                                curVal = scope.posts[i].text;
 
                                 //set row to selected and move to front of list
                                 if (curVal == scope.model) {
@@ -75,7 +77,17 @@ function editField(postsService) {
                     }
                     
                     scope.savePostChanges = function () {
-                        postsService.saveUpdatePosts({'posts' : scope.posts});
+                        if (scope.textField || scope.testemonialField) {
+                            postsService.saveUpdatePosts({'posts' : scope.posts});
+                        } else if (scope.imageField) {
+                            scope.originalPagePost[0].active = true;
+                            scope.originalPagePost[0].text = scope.model;
+                            postsService.saveUpdatePosts({'posts' : scope.originalPagePost});
+
+                            if (scope.newImages && scope.newImages.length > 0) {
+                                postsService.saveImages({'images' : scope.newImages});
+                            }
+                        }
                     }
                     
                     scope.addNewPost = function() {
@@ -103,15 +115,32 @@ function editField(postsService) {
                             scope.newPostError = false;
                         }
 
+                        newPost.active = true;
                         newPost.text = input.val();
                         newPost.date_created = 'now';
-                        scope.posts.unshift(newPost);
+                        newPost.title = scope.title;
+                        newPost.tag = scope.tag;
+                        newPost.page = scope.originalPage;
 
+                        //deselect current row
+                        scope.posts[scope.selectedRow].active = false;
+                        //add new row
+                        scope.posts.unshift(newPost);
+                        scope.selectedRow = 0;
+                        //update  model
                         scope.toggleSelected(0);
                     }
 
                     scope.enableNewPostField = function() {
                         scope.showNewPostField = true;
+                    }
+
+                    scope.enterNewPost = function() {
+                        if (scope.textField || scope.testemonialField) {
+                            scope.showNewPostField = true;
+                        } else if (scope.imageField) {
+                            //open image picker
+                        }
                     }
 
                     scope.removeNewPosts = function() {
@@ -127,30 +156,43 @@ function editField(postsService) {
                     }
 
                     scope.toggleSelected = function(row) {
+                        scope.posts[scope.selectedRow].active = false;
                         scope.selectedRow = row;
 
                         var post = scope.posts[row];
 
-                        if (scope.imageField) {
-                            scope.model = post.path;
-                        } else {
-                            scope.model = post.text;
-                        }
+                        scope.model = post.text;
                         
                         if (scope.testemonialField) {
                             scope.author = post.author;
                         }
+
+                        post.active = true;
                     }
 
                     scope.loadPopupData = function() {
+
                         //load data based on title and tag
                         postsService.fetchPostsByTitleTag({'title': scope.title, 'tag' : scope.tag})
                             .then(function (data) {
                                 scope.posts = data;
-
                                 setInitialActive();
+
+                                //also fetch images if currently editing an image post
+                                if (scope.imageField) {
+                                    //only post that should be updated for images, initialize as list for consistency
+                                    scope.originalPagePost = [scope.posts[0]];
+                                    //pass in path of current image to avoid refetching it
+                                    postsService.fetchImages({'active' : scope.posts[0].text})
+                                        .then(function(data) {
+                                            //add images to list of data
+                                            for (var i = 0; i < data.length; i++) {
+                                                scope.posts.push(data[i]);
+                                            }
+                                        });
+                                }
                             });
-                        
+
                         $(elem).find('.editFieldModal').modal('show');
                         scope.showNewPostField = false;
                         scope.newPostError = false;

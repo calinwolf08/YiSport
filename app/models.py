@@ -33,7 +33,7 @@ class User(Model):
 class Image(Model):
     image = PrimaryKeyField()
     path = CharField(max_length = '150')
-    type = CharField(max_length= '50')
+    type = CharField(max_length= '50')          #logo or slideshow so far
 
     class Meta:
         database = db
@@ -62,7 +62,7 @@ class PagePost(Model):
         database = db
 
 if __name__ == '__main__':
-    db.connect()
+    """db.connect()
     db.drop_tables([PagePost], safe = True)
     db.create_tables([PagePost], safe = True)
 
@@ -97,7 +97,7 @@ if __name__ == '__main__':
              text="Definitively the best TKD school in Washington. Not just for Sport TKD but for conditioning of the mind and body for kids. One of my favorite aspects of the training are the life lessons that are taught at the end of every class. Respect, confidence, motivation, and self belief are the core teachings at Yi Sport TKD.",
              active="true", author="Gene Shin").save()
 
-    """Image(path = "static/images/yisporttkd_logo1.jpg", type="logo").save()
+    Image(path = "static/images/yisporttkd_logo1.jpg", type="logo").save()
     Image(path="static/images/slideshow/bow.jpg", type="slideshow").save()
     Image(path="static/images/slideshow/kick.jpg", type="slideshow").save()
     Image(path="static/images/slideshow/pose.jpg", type="slideshow").save()

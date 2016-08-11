@@ -22,7 +22,7 @@ function indexController($scope, postsService) {
             page: 'index'
         };
 
-        postsService.getPostsByTag(param).then(function (data) {
+        postsService.getPostsByPage(param).then(function (data) {
             if (data) {
                $scope.posts = data;
                 initializeTextFields();

@@ -78,7 +78,7 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/getPostsByTag', methods=['GET', 'POST'])
+@app.route('/serivce/getPostsByPage', methods=['GET', 'POST'])
 def getPostsByTag():
     posts = []
 
@@ -89,7 +89,7 @@ def getPostsByTag():
 
     return json.dumps(posts)
 
-@app.route('/fetchPostsByTitle', methods=['GET', 'POST'])
+@app.route('/serivce/fetchPostsByTitleTag', methods=['GET', 'POST'])
 def fetchPostsByTitle():
     posts = []
 
@@ -101,12 +101,45 @@ def fetchPostsByTitle():
 
     return json.dumps(posts)
 
-@app.route('/saveUpdatePosts', methods=['GET', 'POST'])
+@app.route('/serivce/fetchImages', methods=['GET', 'POST'])
+def fetchImages():
+    images = []
+
+    activePath = request.get_json().get('active')
+
+    for img in models.Image.select().where(models.Image.path != activePath):
+        temp = {'text': img.path}
+        images.append(temp)
+
+    return json.dumps(images)
+
+@app.route('/serivce/saveImages', methods=['GET', 'POST'])
+def saveNewImages():
+    images = request.get_json().get('images')
+
+    for image in images:
+        temp = models.Image(path=image['text'], type='slideshow')
+        temp.save()
+
+    return json.dumps({})
+
+@app.route('/serivce/saveUpdatePosts', methods=['GET', 'POST'])
 def saveUpdatePosts():
     posts = request.get_json().get('posts')
-    print(posts)
 
-    return json.dumps(posts)
+    for post in posts:
+        temp = models.PagePost(page=post['page'], title=post['title'], tag=post['tag'],
+                               text=post['text'], active=post['active'])
+
+        if 'post_id' in post.keys():
+            temp.post_id = post['post_id']
+
+        if 'author' in post.keys():
+            temp.author = post['author']
+
+        temp.save()
+
+    return json.dumps({})
 
 @app.route('/editField.html', methods=['GET', 'POST'])
 def editField():

@@ -8,6 +8,21 @@
     margin-top: 50px;
 }
 
+.my-container {
+    padding: 5px;
+    text-align: center;
+}
+
+.my-thumbnail {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    max-height: 150px;
+    border: solid;
+    border-width: 3px;
+    border-color: black;
+}
+
 h1 {
     font-family: Impact;
     letter-spacing: 4px;
