@@ -40,15 +40,22 @@ function postsService($http) {
                         return null;
                     });
         },
-        saveImages : function(data) {
-            return $http.post("/serivce/saveImages", JSON.stringify(data))
-                .then(function (response) {
-                        return response.data;
+        saveNewImage : function(data) {
+            return $http({method: 'POST', url: '/serivce/saveNewImage',
+                data: data,
+                headers: {'Content-Type': undefined},
+                transformRequest: angular.identity})
+                .then(function(response) {
+                    console.log(response.data);
+
+                    if (response.data.success) {
+                        console.log('import success!');
                     }
-                    ,function (response) {
-                        console.log('failed to save images');
-                        return null;
-                    });
+
+                    return response.data.path;
+                }, function(response) {
+                    console.log('error: ' + response.data);
+                });
         }
     }
 }

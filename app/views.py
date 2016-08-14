@@ -5,6 +5,8 @@ from flask_login import *
 from app import app, models, login_manager
 from .forms import LoginForm
 from playhouse.shortcuts import model_to_dict
+from werkzeug import secure_filename
+import os
 
 @login_manager.user_loader
 def load_user(id):
@@ -35,14 +37,6 @@ def try_login(email, password):
 @app.route('/')
 @app.route('/index')
 def index():
-    #image_db = models.Image.select()
-    #images = []
-
-    #for i in image_db:
-       # images.append(i.path)
-
-    #print(images)
-
     return render_template('index.html')
 
 @app.route('/about')
@@ -113,17 +107,23 @@ def fetchImages():
 
     return json.dumps(images)
 
-@app.route('/serivce/saveImages', methods=['GET', 'POST'])
+@app.route('/serivce/saveNewImage', methods=['GET', 'POST'])
 def saveNewImages():
-    images = request.get_json().get('images')
+    file = request.files['file']
 
-    for image in images:
-        temp = models.Image(path=image['text'], type='slideshow')
-        temp.save()
+    newPath = os.path.join('static', 'images', 'slideshow', file.filename)
+    dir = os.path.dirname(os.path.abspath(__file__))
 
-    return json.dumps({})
+    path = os.path.join(dir, newPath)
 
-@app.route('/serivce/saveUpdatePosts', methods=['GET', 'POST'])
+    file.save(path)
+
+    temp = models.Image(path=newPath, type='slideshow')
+    temp.save()
+
+    return json.dumps({'path' : newPath, 'success' : True})
+
+@app.route('/serivce/saveUpdatePosts', methods=['POST'])
 def saveUpdatePosts():
     posts = request.get_json().get('posts')
 
@@ -141,6 +141,6 @@ def saveUpdatePosts():
 
     return json.dumps({})
 
-@app.route('/editField.html', methods=['GET', 'POST'])
+@app.route('/directives/editField.html', methods=['GET', 'POST'])
 def editField():
-    return render_template('editField.html')
+    return render_template('directives/editField.html')

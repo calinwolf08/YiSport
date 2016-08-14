@@ -12,7 +12,7 @@ function editField(postsService) {
             tag : '@',      //type of object - img or text
         },
         transclude: true,
-        templateUrl: "editField.html",
+        templateUrl: "directives/editField.html",
         compile : function (scope, element, attributes) {
             return {
                 pre : function(scope, elem, attr) {
@@ -75,36 +75,19 @@ function editField(postsService) {
                             }
                         }
                     }
-                    
+
                     scope.savePostChanges = function () {
                         if (scope.textField || scope.testemonialField) {
                             postsService.saveUpdatePosts({'posts' : scope.posts});
                         } else if (scope.imageField) {
-                            scope.originalPagePost[0].active = true;
-                            scope.originalPagePost[0].text = scope.model;
-                            postsService.saveUpdatePosts({'posts' : scope.originalPagePost});
-
-                            if (scope.newImages && scope.newImages.length > 0) {
-                                postsService.saveImages({'images' : scope.newImages});
-                            }
+                            scope.originalImagePost[0].active = true;
+                            scope.originalImagePost[0].text = scope.model;
+                            postsService.saveUpdatePosts({'posts' : scope.originalImagePost});
                         }
                     }
-                    
-                    scope.addNewPost = function() {
+
+                    var initText = function() {
                         var newPost = {};
-
-                        if (scope.testemonialField) {
-                            var author = $(elem).find('.newAuthor');
-
-                            if (!author.val()) {
-                                scope.newPostError = true;
-                                return;
-                            } else {
-                                scope.newPostError = false;
-                            }
-
-                            newPost.author = author.val();
-                        }
 
                         var input = $(elem).find('.newPost');
 
@@ -115,20 +98,77 @@ function editField(postsService) {
                             scope.newPostError = false;
                         }
 
-                        newPost.active = true;
                         newPost.text = input.val();
+
+                        return newPost;
+                    }
+
+                    var initTestemonial = function() {
+                        var newPost = initText();
+
+                        var author = $(elem).find('.newAuthor');
+
+                        if (!author.val()) {
+                            scope.newPostError = true;
+                            return;
+                        } else {
+                            scope.newPostError = false;
+                        }
+
+                        newPost.author = author.val();
+
+                        return newPost;
+                    }
+
+                    var fillOutNewPost = function(newPost) {
+                        newPost.active = true;
                         newPost.date_created = 'now';
                         newPost.title = scope.title;
                         newPost.tag = scope.tag;
                         newPost.page = scope.originalPage;
 
-                        //deselect current row
-                        scope.posts[scope.selectedRow].active = false;
                         //add new row
                         scope.posts.unshift(newPost);
                         scope.selectedRow = 0;
                         //update  model
                         scope.toggleSelected(0);
+
+                        return newPost;
+                    }
+
+                    scope.addNewImage = function() {
+                        //get image file
+                        var file = $(elem).find('.newFile')[0].files[0];
+                        var form = new FormData();
+
+                        form.append('file', file);
+                        
+                        var newPost = {};
+
+                        postsService.saveNewImage(form)
+                            .then(function(data) {
+                                newPost.text = data;
+                                return fillOutNewPost(newPost);
+                            });
+                    }
+
+                    scope.addNewPost = function() {
+                        var newPost = {};
+
+                        if (scope.textField) {
+                            newPost = initText();
+                        }
+
+                        if (scope.testemonialField) {
+                            newPost = initTestemonial();
+                        }
+
+                        //deselect current row
+                        if (scope.posts.length) {
+                            scope.posts[scope.selectedRow].active = false;
+                        }
+
+                        return fillOutNewPost(newPost);
                     }
 
                     scope.enableNewPostField = function() {
@@ -136,11 +176,7 @@ function editField(postsService) {
                     }
 
                     scope.enterNewPost = function() {
-                        if (scope.textField || scope.testemonialField) {
-                            scope.showNewPostField = true;
-                        } else if (scope.imageField) {
-                            //open image picker
-                        }
+                        scope.showNewPostField = true;
                     }
 
                     scope.removeNewPosts = function() {
@@ -171,7 +207,6 @@ function editField(postsService) {
                     }
 
                     scope.loadPopupData = function() {
-
                         //load data based on title and tag
                         postsService.fetchPostsByTitleTag({'title': scope.title, 'tag' : scope.tag})
                             .then(function (data) {
@@ -181,7 +216,7 @@ function editField(postsService) {
                                 //also fetch images if currently editing an image post
                                 if (scope.imageField) {
                                     //only post that should be updated for images, initialize as list for consistency
-                                    scope.originalPagePost = [scope.posts[0]];
+                                    scope.originalImagePost = [scope.posts[0]];
                                     //pass in path of current image to avoid refetching it
                                     postsService.fetchImages({'active' : scope.posts[0].text})
                                         .then(function(data) {

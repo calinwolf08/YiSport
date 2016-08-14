@@ -1,84 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div custom-layout>
+  <div custom-layout ng-controller="aboutController">
+    <!-- About YiSport -->
     <div class="container-fluid">
-      <h1>About Yi Sport Taekwondo</h1>
+      <h1 style="text-align: center">About Yi Sport Taekwondo</h1>
       <div class="row">
-        <div>
-          <p>Taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc
-          taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc
-          taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc
-          taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc
-          taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc taekwondo school etc etc.</p>
+        <div
+          {% if g.user.is_authenticated %}
+            edit-field tag="text" title="about" model="aboutYiSport"
+          {% endif %}>
+          <p ng-bind="aboutYiSport"></p>
         </div>
       </div>
     </div>
+
+    <!-- Lionel Lee -->
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="pics-container">
-            <img src="{{ url_for('static', filename="images/slideshow/bow.jpg") }}"
-                 class="my-img img-rounded img-responsive"/>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <h2>Lionel Lee</h2>
-          <p>Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee
-          Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel
-          Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel
-          Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel </p>
-        </div>
-      </div>
+      {% include 'about/lionelLee.html' %}
     </div>
+
+    <!-- Sara Gray -->
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-6">
-          <h2>Sara Gray</h2>
-          <p>Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray
-          Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray
-          Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray
-          Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray
-          Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray </p>
-        </div>
-        <div class="col-sm-6">
-          <div class="pics-container">
-            <img src="{{ url_for('static', filename="images/slideshow/bow.jpg") }}"
-                 class="my-img img-rounded img-responsive"/>
-          </div>
-        </div>
-      </div>
+      {% include 'about/saraGray.html' %}
     </div>
+
+    <!-- Khalil Butler -->
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="pics-container">
-            <img src="{{ url_for('static', filename="images/slideshow/bow.jpg") }}"
-                 class="my-img img-rounded img-responsive"/>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <h2>Khalil Butler</h2>
-          <p>Khalil Butler Khalil Butler Khalil Butler Khalil Butler Khalil Butler Khalil Butler Khalil Butler
-          Khalil Butler Khalil Butler Khalil Butler Khalil Butler Khalil Butler Khalil Butler Khalil Butler
-          Khalil Butler Khalil Butler Khalil Butler Khalil Butler Khalil Butler Khalil Butler Khalil Butler </p>
-        </div>
-      </div>
+      {% include 'about/khalilButler.html' %}
     </div>
+
+    <!-- Isaak Boyance -->
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-6">
-          <h2>Isaak Boyance</h2>
-          <p>Isaak Boyance Isaak Boyance Isaak Boyance Isaak Boyance Isaak Boyance Isaak Boyance Isaak Boyance
-          Isaak Boyance Isaak Boyance Isaak Boyance Isaak Boyance Isaak Boyance Isaak Boyance Isaak Boyance </p>
-        </div>
-        <div class="col-sm-6">
-          <div class="pics-container">
-            <img src="{{ url_for('static', filename="images/slideshow/bow.jpg") }}"
-                 class="my-img img-rounded img-responsive"/>
-          </div>
-        </div>
-      </div>
+      {% include 'about/isaakBoyance.html' %}
     </div>
   </div>
 {% endblock %}

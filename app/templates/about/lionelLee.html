@@ -1,0 +1,22 @@
+<div class="row">
+
+  <div class="col-sm-6">
+    <div class="pics-container"
+      {% if g.user.is_authenticated %}
+        edit-field tag="image" title="lionelLee" model="lionelLeeImage"
+      {% endif %}>
+      <img ng-src="{% raw %}{{ lionelLeeImage }}{% endraw %}" class="my-img img-rounded img-responsive"/>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <h1>Lionel Lee</h1>
+    <div class="container-fluid"
+      {% if g.user.is_authenticated %}
+        edit-field tag="text" title="lionelLee" model="lionelLeeText"
+      {% endif %}>
+      <p ng-bind="lionelLeeText"></p>
+    </div>
+  </div>
+
+</div>

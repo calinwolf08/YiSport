@@ -7,6 +7,7 @@ angular.module('yiSportApp', [])
     .filter('capitalize', capitalize)
 
     .controller('indexController', indexController)
+    .controller('aboutController', aboutController)
 
     .directive('editField', ['postsService', editField])
     .directive('customLayout', customLayout);

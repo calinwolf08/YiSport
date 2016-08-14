@@ -1,0 +1,22 @@
+<div class="row">
+
+  <div class="col-sm-6">
+    <h1>Sara Gray</h1>
+    <div class="container-fluid"
+      {% if g.user.is_authenticated %}
+        edit-field tag="text" title="saraGray" model="saraGrayText"
+      {% endif %}>
+      <p ng-bind="saraGrayText"></p>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="pics-container"
+      {% if g.user.is_authenticated %}
+        edit-field tag="text" title="saraGray" model="saraGrayImage"
+      {% endif %}>
+      <img ng-src="{% raw %}{{ saraGrayImage }}{% endraw %}" class="my-img img-rounded img-responsive"/>
+    </div>
+  </div>
+
+</div>
