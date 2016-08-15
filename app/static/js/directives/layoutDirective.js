@@ -7,19 +7,18 @@ function customLayout() {
         link : function(scope, elem, attr) {
             elem.children().each(function (i, e) {
                 $(e).addClass('container-fluid');
-                $(e).css({
+                /*$(e).css({
                     'border' : 'solid',
                     'border-color' :'#fff',
                     'border-width' : '25px',
                     'border-bottom-width' : '0px'
-                });
-                $(e).css('background-color', '#e6e6e6');
-                /*if (i % 2) { //every other div starting with second
-                 
-                 $(e).css('background-color', '#e6e6e6');
+                });*/
+
+                if (i % 2) { //every other div starting with second
+                    $(e).css('background-color', '#fff');
                 } else {
                     $(e).css('background-color', '#e6e6e6');
-                }*/
+                }
             });
         }
     }

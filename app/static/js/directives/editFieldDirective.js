@@ -99,10 +99,15 @@ function editField(postsService) {
 
                         if (!input.val()) {
                             scope.newPostError = true;
-                            return;
-                        } else {
-                            scope.newPostError = false;
+                            scope.errorMessage = "Can't submit empty fields";
+                            return null;
+                        } else if (input.val().length >= 1500) {
+                            scope.newPostError = true;
+                            scope.errorMessage = "Message must be less than 1500 characters.\nCurrently at " + input.val().length;
+                            return null;
                         }
+
+                        scope.newPostError = false;
 
                         newPost.text = input.val();
 
@@ -112,14 +117,19 @@ function editField(postsService) {
                     var initTestemonial = function() {
                         var newPost = initText();
 
+                        if (!newPost) {
+                            return;
+                        }
+
                         var author = $(elem).find('.newAuthor');
 
                         if (!author.val()) {
                             scope.newPostError = true;
+                            scope.errorMessage = "Can't submit empty fields";
                             return;
-                        } else {
-                            scope.newPostError = false;
                         }
+                        
+                        scope.newPostError = false;
 
                         newPost.author = author.val();
 

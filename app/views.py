@@ -53,6 +53,7 @@ def blog():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    print('here')
     if g.user is not None and g.user.is_authenticated:
         return redirect(url_for('index'))
 

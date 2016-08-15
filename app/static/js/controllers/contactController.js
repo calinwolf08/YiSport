@@ -15,7 +15,7 @@ function contactController($scope) {
         if ($scope.nameSubject.trim() == "" ||
             $scope.emailAddress.trim() == "" ||
             $scope.emailMessage.trim() == "") {
-            console.log("here");
+            
             $scope.errorMessage = "Please fill out all fields.";
         }
 
