@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="row">
+    <h1 style="text-align: center; padding-bottom: 50px;">Sign Up Today!</h1>
+  </div>
+  <div class="col-sm-6">
+    <div
+      {% if g.user.is_authenticated %}
+        edit-field tag="image" title="program" model="programImg"
+      {% endif %}
+      class="pics-container">
+      <img ng-src="{% raw %}{{ programImg }}{% endraw %}"
+           class="my-img img-rounded img-responsive"/>
+    </div>
+  </div>
+  <div class="col-sm-6 img-rounded">
+    <div
+      {% if g.user.is_authenticated %}
+        edit-field tag="text" title="program" model="programText"
+      {% endif %}
+      class="container-fluid">
+      <p ng-bind="programText"></p>
+      <div class="row container-fluid" style="padding-right: 25%; padding-left: 25%">
+        <a class="btn btn-primary btn-lg btn-block" href="{{ url_for('contact') }}">Contact Us!</a>
+      </div>
+    </div>
+  </div>
+</div>

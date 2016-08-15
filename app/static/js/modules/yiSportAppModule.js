@@ -8,6 +8,7 @@ angular.module('yiSportApp', [])
 
     .controller('indexController', indexController)
     .controller('aboutController', aboutController)
+    .controller('contactController', contactController)
 
     .directive('editField', ['postsService', editField])
     .directive('customLayout', customLayout);

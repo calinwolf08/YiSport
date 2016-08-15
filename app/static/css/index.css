@@ -2,15 +2,30 @@
     color: #ffffff;
     padding: 20px 25px;
     margin-bottom: 0;
-    background-image: url("../images/slideshow/pose.jpg");
+    background-image: url("../images/post/pose.jpg");
     background-size: cover;
     padding: 15%;
     margin-top: 50px;
 }
 
+.btn-primary {
+    background-color: #8C489F;
+    border-color: #000;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active {
+    color: #ffffff;
+    background-color: #6c377b;
+    border-color: #fff;
+}
+
 .my-container {
     padding: 5px;
     text-align: center;
+    min-height: 200px;
+    max-height: 200px;
 }
 
 .my-thumbnail {

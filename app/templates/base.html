@@ -19,6 +19,7 @@
   <script type="text/javascript" src="{{ url_for('static', filename="js/services/postsService.js") }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename="js/controllers/indexController.js") }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename="js/controllers/aboutController.js") }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename="js/controllers/contactController.js") }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename="js/modules/yiSportAppModule.js") }}"></script>
 
   <link rel="stylesheet "type="text/css" href="{{ url_for('static', filename="css/index.css") }}">
@@ -35,7 +36,6 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <!--<a class="navbar-brand" onclick="followLink('/')">YI SPORT</a>-->
         <div class="navbar-brand nav-img"
         style="min-height: 50px;display: flex;align-items: center;">
           <img onclick="followLink('/')" width="60px"
@@ -57,15 +57,6 @@
               <a id="blogNav" onclick="followLink('blog')">BLOG</a>
             </li>
           </ul>
-          <!--<ul class="nav navbar-nav navbar-right">
-            <li>
-              {% if g.user.is_authenticated %}
-                <a id="logoutNav" onclick="followLink('logout')">LOGOUT</a>
-              {% else %}
-                <a id="loginNav" onclick="followLink('login')">LOGIN</a>
-              {% endif %}
-            </li>
-          </ul>-->
         </div>
       </div>
     </div>

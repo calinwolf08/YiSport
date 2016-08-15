@@ -4,6 +4,9 @@
 function aboutController($scope, postsService) {
     $scope.posts = [];
 
+    /**
+     * Default posts for about page
+     */
     $scope.aboutYiSport = "Taekwondo school etc etc taekwondo school etc etc " +
         "taekwondo school etc etc taekwondo school etc etc taekwondo school etc " +
         "etc taekwondo school etc etc taekwondo school etc etc taekwondo school " +
@@ -23,7 +26,7 @@ function aboutController($scope, postsService) {
         "Lionel Lee Lionel Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee " +
         "Lionel Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee " +
         "Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel Lee Lionel";
-    $scope.lionelLeeImage = "static/images/slideshow/bow.jpg";
+    $scope.lionelLeeImage = "static/images/post/bow.jpg";
 
     $scope.saraGrayText = "Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray" +
         " Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray" +
@@ -31,18 +34,18 @@ function aboutController($scope, postsService) {
         "Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray " +
         "Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray " +
         "Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray Sara Gray";
-    $scope.saraGrayImage = "static/images/slideshow/bow.jpg";
+    $scope.saraGrayImage = "static/images/post/bow.jpg";
 
     $scope.khalilButlerText = "Khalil Butler Khalil Butler Khalil Butler Khalil Butler " +
         "Khalil Butler Khalil Butler Khalil Butler Khalil Butler Khalil Butler Khalil Butler " +
         "Khalil Butler Khalil Butler Khalil Butler Khalil Butler Khalil Butler Khalil Butler " +
         "Khalil Butler Khalil Butler Khalil Butler Khalil Butler Khalil Butler";
-    $scope.khalilButlerImage = "static/images/slideshow/bow.jpg";
+    $scope.khalilButlerImage = "static/images/post/bow.jpg";
 
     $scope.isaakBoyanceText = "Isaak Boyance Isaak Boyance Isaak Boyance Isaak Boyance " +
         "Isaak Boyance Isaak Boyance Isaak Boyance Isaak Boyance Isaak Boyance Isaak Boyance " +
         "Isaak Boyance Isaak Boyance Isaak Boyance Isaak Boyance";
-    $scope.isaakBoyanceImage = "static/images/slideshow/bow.jpg";
+    $scope.isaakBoyanceImage = "static/images/post/bow.jpg";
 
     var fetchPosts = function () {
         param = {

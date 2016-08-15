@@ -4,6 +4,10 @@ import datetime
 
 db = MySQLDatabase('YiSportTKD', user="calin", password="")
 
+"""
+create slideshow table with fk to images
+"""
+
 class User(Model):
     user_id = PrimaryKeyField()
     email = CharField(max_length='100')
@@ -33,7 +37,7 @@ class User(Model):
 class Image(Model):
     image = PrimaryKeyField()
     path = CharField(max_length = '150')
-    type = CharField(max_length= '50')          #logo or slideshow so far
+    type = CharField(max_length= '50')          #logo or post so far
 
     class Meta:
         database = db
@@ -62,29 +66,29 @@ class PagePost(Model):
         database = db
 
 if __name__ == '__main__':
-    """db.connect()
-    db.drop_tables([PagePost], safe = True)
-    db.create_tables([PagePost], safe = True)
-
+    db.connect()
+    db.drop_tables([Image], safe = True)
+    db.create_tables([Image], safe = True)
+    """
     PagePost(page="index", title="welcome", tag="text",
              text="welcome to yisport tkd welcome to yisport tkd welcome to yisport tkd",
              active="true").save()
     PagePost(page="index", title="welcome", tag="image",
-             text = "static/images/slideshow/kick.jpg",
+             text = "static/images/post/kick.jpg",
              active = "true").save()
 
     PagePost(page="index", title="values", tag="text",
-             text="being good and stuff", path="static/images/slideshow/bow.jpg",
+             text="being good and stuff", path="static/images/post/bow.jpg",
              active="true").save()
     PagePost(page="index", title="values", tag="image",
-             text="static/images/slideshow/bow.jpg",
+             text="static/images/post/bow.jpg",
              active="true").save()
 
     PagePost(page="index", title="news", tag="text",
              text="news, dates, etc",
              active="true").save()
     PagePost(page="index", title="news", tag="image",
-             text="static/images/slideshow/trophy.jpg",
+             text="static/images/post/trophy.jpg",
              active="true").save()
 
     PagePost(page="index", title="testemonial", tag="testemonial",
@@ -95,11 +99,11 @@ if __name__ == '__main__':
              active="true", author="Parvana Saladino").save()
     PagePost(page="index", title="testemonial", tag="testemonial",
              text="Definitively the best TKD school in Washington. Not just for Sport TKD but for conditioning of the mind and body for kids. One of my favorite aspects of the training are the life lessons that are taught at the end of every class. Respect, confidence, motivation, and self belief are the core teachings at Yi Sport TKD.",
-             active="true", author="Gene Shin").save()
+             active="true", author="Gene Shin").save()"""
 
     Image(path = "static/images/yisporttkd_logo1.jpg", type="logo").save()
-    Image(path="static/images/slideshow/bow.jpg", type="slideshow").save()
-    Image(path="static/images/slideshow/kick.jpg", type="slideshow").save()
-    Image(path="static/images/slideshow/pose.jpg", type="slideshow").save()
-    Image(path="static/images/slideshow/trophy.jpg", type="slideshow").save()
-    Image(path="static/images/slideshow/womens_team.jpg", type="slideshow").save()"""
+    Image(path="static/images/post/bow.jpg", type="post").save()
+    Image(path="static/images/post/kick.jpg", type="post").save()
+    Image(path="static/images/post/pose.jpg", type="post").save()
+    Image(path="static/images/post/trophy.jpg", type="post").save()
+    Image(path="static/images/post/womens_team.jpg", type="post").save()

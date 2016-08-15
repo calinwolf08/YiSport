@@ -3,7 +3,7 @@
   <div class="col-sm-6">
     <div class="pics-container"
       {% if g.user.is_authenticated %}
-        edit-field tag="text" title="khalilButler" model="khalilButlerImage"
+        edit-field tag="image" title="khalilButler" model="khalilButlerImage"
       {% endif %}>
       <img ng-src="{% raw %}{{ khalilButlerImage }}{% endraw %}" class="my-img img-rounded img-responsive"/>
     </div>

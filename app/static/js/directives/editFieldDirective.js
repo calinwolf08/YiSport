@@ -28,7 +28,7 @@ function editField(postsService) {
                     scope.testemonialField = false;
 
                     scope.originalModel = scope.model;
-                    scope.originalPage = '';
+                    scope.originalPage = '';       //never initialized if no posts have ever been made
 
                     if (scope.tag == 'text') {
                         scope.textField = true;
@@ -80,6 +80,12 @@ function editField(postsService) {
                         if (scope.textField || scope.testemonialField) {
                             postsService.saveUpdatePosts({'posts' : scope.posts});
                         } else if (scope.imageField) {
+
+                            //initialize
+                            if (!scope.originalImagePost) {
+                                scope.originalImagePost = [fillOutNewPost({})];
+                            }
+
                             scope.originalImagePost[0].active = true;
                             scope.originalImagePost[0].text = scope.model;
                             postsService.saveUpdatePosts({'posts' : scope.originalImagePost});
@@ -127,12 +133,6 @@ function editField(postsService) {
                         newPost.tag = scope.tag;
                         newPost.page = scope.originalPage;
 
-                        //add new row
-                        scope.posts.unshift(newPost);
-                        scope.selectedRow = 0;
-                        //update  model
-                        scope.toggleSelected(0);
-
                         return newPost;
                     }
 
@@ -148,7 +148,21 @@ function editField(postsService) {
                         postsService.saveNewImage(form)
                             .then(function(data) {
                                 newPost.text = data;
-                                return fillOutNewPost(newPost);
+
+                                //set this post to original post if it hasn't already been set
+                                if (!scope.originalImagePost) {
+                                    scope.originalImagePost = [newPost];
+                                }
+
+                                newPost = fillOutNewPost(newPost);
+
+                                //add new row
+                                scope.posts.unshift(newPost);
+                                scope.selectedRow = 0;
+                                //update  model
+                                scope.toggleSelected(0);
+
+                                return newPost;
                             });
                     }
 
@@ -168,7 +182,15 @@ function editField(postsService) {
                             scope.posts[scope.selectedRow].active = false;
                         }
 
-                        return fillOutNewPost(newPost);
+                        newPost = fillOutNewPost(newPost);
+
+                        //add new row
+                        scope.posts.unshift(newPost);
+                        scope.selectedRow = 0;
+                        //update  model
+                        scope.toggleSelected(0);
+
+                        return newPost;
                     }
 
                     scope.enableNewPostField = function() {
@@ -187,8 +209,20 @@ function editField(postsService) {
                             }
                         }
 
-                        scope.posts.splice(0, i);
-                        scope.toggleSelected(0);
+                        if (scope.imageField) {
+                            //drop new images from database
+                            var imagesToRemove = scope.posts.slice(0, i);
+
+                            postsService.removeImages({'posts' : imagesToRemove})
+                                .then(function(data) {
+                                    scope.posts.splice(0, i);
+                                    scope.posts[0].text = scope.originalModel;
+                                    scope.toggleSelected(0);
+                                });
+                        } else {
+                            scope.posts.splice(0, i);
+                            scope.toggleSelected(0);
+                        }
                     }
 
                     scope.toggleSelected = function(row) {
@@ -216,9 +250,16 @@ function editField(postsService) {
                                 //also fetch images if currently editing an image post
                                 if (scope.imageField) {
                                     //only post that should be updated for images, initialize as list for consistency
-                                    scope.originalImagePost = [scope.posts[0]];
+                                    if (scope.posts.length) {
+                                        scope.originalImagePost = [scope.posts[0]];
+                                        var param = {'active' : scope.posts[0].text};
+                                    } else {
+                                        scope.originalImagePost = null;
+                                        var param = {'active' : null};
+                                    }
+
                                     //pass in path of current image to avoid refetching it
-                                    postsService.fetchImages({'active' : scope.posts[0].text})
+                                    postsService.fetchImages(param)
                                         .then(function(data) {
                                             //add images to list of data
                                             for (var i = 0; i < data.length; i++) {
@@ -226,6 +267,9 @@ function editField(postsService) {
                                             }
                                         });
                                 }
+                            },
+                            function(data) {
+                                console.log('error: ' + data);
                             });
 
                         $(elem).find('.editFieldModal').modal('show');

@@ -111,17 +111,31 @@ def fetchImages():
 def saveNewImages():
     file = request.files['file']
 
-    newPath = os.path.join('static', 'images', 'slideshow', file.filename)
+    newPath = os.path.join('static', 'images', 'post', secure_filename(file.filename))
     dir = os.path.dirname(os.path.abspath(__file__))
 
     path = os.path.join(dir, newPath)
 
     file.save(path)
 
-    temp = models.Image(path=newPath, type='slideshow')
+    temp = models.Image(path=newPath, type='post')
     temp.save()
 
-    return json.dumps({'path' : newPath, 'success' : True})
+    return json.dumps({'path' : newPath})
+
+@app.route('/serivce/removeImages', methods=['POST'])
+def removeImages():
+    posts = request.get_json().get('posts')
+
+    for post in posts:
+        dir = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(dir, post['text'])
+
+        os.remove(path)
+
+        models.Image.delete().where(models.Image.path == post['text']).execute()
+
+    return jsonify(success=True)
 
 @app.route('/serivce/saveUpdatePosts', methods=['POST'])
 def saveUpdatePosts():

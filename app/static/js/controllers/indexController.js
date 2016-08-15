@@ -5,10 +5,10 @@ function indexController($scope, postsService) {
     $scope.posts = [];
 
     $scope.welcomeText = "welcome to yisport tkd welcome to yisport tkd welcome to yisport tkd";
-    $scope.welcomeImg = "static/images/slideshow/kick.jpg";
+    $scope.welcomeImg = "static/images/post/kick.jpg";
 
     $scope.valuesText = "being good and stuff";
-    $scope.valuesImg = "static/images/slideshow/bow.jpg";
+    $scope.valuesImg = "static/images/post/bow.jpg";
 
     $scope.testemonialOne = {text : 'While I’m sure there are many caring coaches and instructors ' +
     'in Seattle, Yi Sport TKD stood out to my wife and I after watching our first class, and ' +
@@ -28,7 +28,10 @@ function indexController($scope, postsService) {
         author: 'Gene Shin'};
 
     $scope.newsText = "news, dates, etc";
-    $scope.newsImg = "static/images/slideshow/trophy.jpg";
+    $scope.newsImg = "static/images/post/trophy.jpg";
+
+    $scope.programText = "just show up";
+    $scope.programImg = "static/images/post/bow.jpg";
 
     var fetchPosts = function () {
         param = {
@@ -83,8 +86,14 @@ function indexController($scope, postsService) {
                     else
                         $scope.newsImg = cur.text;
                     break;
+                case 'program':
+                    if (cur.tag == 'text')
+                        $scope.programText = cur.text;
+                    else
+                        $scope.programImg = cur.text;
+                    break;
                 default:
-                    console.log('Unknown Post: ' + cur);
+                    console.log('Unknown Post: ' + JSON.stringify(cur));
             }
         }
     }

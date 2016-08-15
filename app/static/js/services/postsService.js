@@ -46,16 +46,22 @@ function postsService($http) {
                 headers: {'Content-Type': undefined},
                 transformRequest: angular.identity})
                 .then(function(response) {
-                    console.log(response.data);
-
-                    if (response.data.success) {
-                        console.log('import success!');
-                    }
 
                     return response.data.path;
                 }, function(response) {
                     console.log('error: ' + response.data);
                 });
+        },
+        removeImages : function(data) {
+            return $http.post("/serivce/removeImages", JSON.stringify(data))
+                .then(function (response) {
+                    
+                        return response.data;
+                    }
+                    ,function (response) {
+                        console.log('failed to save posts');
+                        return null;
+                    });
         }
     }
 }
