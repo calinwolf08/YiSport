@@ -1,79 +1,12 @@
 <span class="icon glyphicon glyphicon-cog" ng-click="loadPopupData()"></span>
 
-<div class="modal fade editFieldModal" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h1 class="modal-title">{% raw %}{{ title | capitalize }}{% endraw %} Posts So Far</h1>
-      </div>
-      <div class="modal-body">
-        <p>Select a post to activate it. Click the + to add a new post. Click - to remove new posts.</p>
-        <p>Click submit to save new posts. Click outside popup to preview change.</p>
-        <div class="row">
-          <!-- DISPLAY IF EDITING A TEXT OR TESTEMONIAL FIELD -->
-          <div ng-if="testemonialField || textField">
-            <div class="container-fluid col-sm-9" ng-show="showNewPostField" style="padding-bottom: 15px;">
-              <textarea class="form-control newPost" rows="5" placeholder="Post"></textarea>
-              <span ng-show="newPostError" class="label label-warning" ng-bind="errorMessage"></span>
-            </div>
-            <div class="container-fluid col-sm-3" ng-show="showNewPostField"
-                 style="padding-bottom: 15px; padding-left: 0px">
-              <input ng-if="testemonialField" type="text" class="form-control newAuthor" placeholder="Author"/>
-              </br>
-              <button ng-click="addNewPost()" class="btn button-primary">Add Post</button>
-            </div>
-          </div>
-          <!-- DISPLAY IF EDITING AN IMAGE FIELD -->
-          <div ng-if="imageField">
-            <div class="" ng-show="showNewPostField" style="padding-left: 5%; padding-right: 5%">
-              <form method="post" enctype="multipart/form-data">
-                <input class="newFile" name="file" accept=".png, .jpg, .gif" class="form-control" type="file"/>
-                </br>
-                <button ng-click="addNewImage()" class="btn button-primary">Submit Image</button>
-              </form>
-            </div>
-          </div>
-        </div>
-        <div class="row" style="padding-left: 15%; padding-top: 5%">
-          <span ng-click="enterNewPost()" class="glyphicon glyphicon-plus"></span>
-          <span ng-click="removeNewPosts()" class="glyphicon glyphicon-minus"></span>
-        </div>
-        <div class="container-fluid pre-scrollable row" style="max-height: 450px;">
-          <!-- for text and testemonial fields -->
-          <table ng-if="testemonialField || textField" class="table">
-            <thead>
-              <th>Date Created</th>
-              <th>Value</th>
-              <th ng-if="testemonialField">Author</th>
-            </thead>
-            <tr ng-repeat="post in posts" ng-class="{selected: $index == selectedRow}"
-                ng-click="toggleSelected($index)">
+<div ng-if="textField">{% include 'directives/editFieldText.html' %}</div>
 
-              <td style="min-width: 150px" ng-bind="post.date_created"></td>
+<div ng-if="testemonialField">{% include 'directives/editFieldTestemonial.html' %}</div>
 
-              <td ng-bind="post.text"></td>
+<div ng-if="imageField">{% include 'directives/editFieldImage.html' %}</div>
 
-              <td style="min-width: 150px" ng-if="testemonialField" ng-bind="post.author"></td>
-            </tr>
-          </table>
-          <!-- for image fields -->
-          <div ng-if="imageField" ng-repeat="post in posts">
-            <div class="my-container col-md-4" ng-class="{selected: $index == selectedRow}" ng-click="toggleSelected($index)">
-              <img ng-src="{% raw %}{{ post.text }}{% endraw %}"
-                class="my-thumbnail img-responsive"/>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="removeNewPosts()" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" ng-click="savePostChanges()" data-dismiss="modal">Submit</button>
-      </div>
-    </div>
-  </div>
-</div>
+<div ng-if="slideshowField">{% include 'directives/editFieldSlideshow.html' %}</div>
 
 <ng-transclude></ng-transclude>
 

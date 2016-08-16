@@ -138,6 +138,21 @@ def removeImages():
 
     return jsonify(success=True)
 
+@app.route('/serivce/fetchSlideshowImages', methods=['POST'])
+def fetchSlideshowImages():
+    images = []
+
+    for img in models.Image.select().join(models.SlideShowImage).where(models.Image.image == models.SlideShowImage.image):
+        images.append(img)
+
+    paths = []
+
+    for img in images:
+        temp = {'path': img.path}
+        paths.append(temp)
+
+    return json.dumps(paths)
+
 @app.route('/serivce/saveUpdatePosts', methods=['POST'])
 def saveUpdatePosts():
     posts = request.get_json().get('posts')

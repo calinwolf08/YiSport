@@ -42,6 +42,12 @@ class Image(Model):
     class Meta:
         database = db
 
+class SlideShowImage(Model):
+    image = ForeignKeyField(Image, related_name='slideshowImage')
+
+    class Meta:
+        database = db
+
 class BlogPost(Model):
     blog_post_id = PrimaryKeyField()
     title = CharField(max_length='100')
@@ -67,8 +73,8 @@ class PagePost(Model):
 
 if __name__ == '__main__':
     db.connect()
-    db.drop_tables([Image], safe = True)
-    db.create_tables([Image], safe = True)
+    db.drop_tables([SlideShowImage], safe = True)
+    db.create_tables([SlideShowImage], safe = True)
     """
     PagePost(page="index", title="welcome", tag="text",
              text="welcome to yisport tkd welcome to yisport tkd welcome to yisport tkd",
@@ -99,11 +105,12 @@ if __name__ == '__main__':
              active="true", author="Parvana Saladino").save()
     PagePost(page="index", title="testemonial", tag="testemonial",
              text="Definitively the best TKD school in Washington. Not just for Sport TKD but for conditioning of the mind and body for kids. One of my favorite aspects of the training are the life lessons that are taught at the end of every class. Respect, confidence, motivation, and self belief are the core teachings at Yi Sport TKD.",
-             active="true", author="Gene Shin").save()"""
+             active="true", author="Gene Shin").save()
 
-    Image(path = "static/images/yisporttkd_logo1.jpg", type="logo").save()
-    Image(path="static/images/post/bow.jpg", type="post").save()
-    Image(path="static/images/post/kick.jpg", type="post").save()
-    Image(path="static/images/post/pose.jpg", type="post").save()
-    Image(path="static/images/post/trophy.jpg", type="post").save()
-    Image(path="static/images/post/womens_team.jpg", type="post").save()
+    SlideShowImage(image=2).save()
+    SlideShowImage(image=3).save()
+    SlideShowImage(image=4).save()
+    SlideShowImage(image=5).save()
+    SlideShowImage(image=6).save()
+    """
+

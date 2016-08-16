@@ -10,5 +10,6 @@ angular.module('yiSportApp', [])
     .controller('aboutController', aboutController)
     .controller('contactController', contactController)
 
+    .directive('slideShow', ['postsService', slideShow])
     .directive('editField', ['postsService', editField])
     .directive('customLayout', customLayout);

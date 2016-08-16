@@ -1,9 +1,14 @@
+html, body{
+}
+
 .jumbotron {
     color: #ffffff;
     padding: 20px 25px;
     margin-bottom: 0;
-    background-image: url("../images/post/pose.jpg");
+    height: 70vh;
+    background-position: center 10%;
     background-size: cover;
+    background-color: black;
     padding: 15%;
     margin-top: 50px;
 }

@@ -3,7 +3,9 @@
 {% block content %}
 
   <div ng-controller="indexController">
-    <div class="jumbotron cover-img"></div>
+    <div edit-field tag="slideshow" title="slideshow" model="images">
+      <div class="jumbotron cover-img" slide-show images="images"></div>
+    </div>
 
     <div custom-layout>
       <div>

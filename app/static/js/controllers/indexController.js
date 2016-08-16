@@ -33,6 +33,8 @@ function indexController($scope, postsService) {
     $scope.programText = "just show up";
     $scope.programImg = "static/images/post/bow.jpg";
 
+    $scope.images = [];
+
     var fetchPosts = function () {
         param = {
             page: 'index'

@@ -26,6 +26,7 @@ function editField(postsService) {
                     scope.imageField = false;
                     scope.textField = false;
                     scope.testemonialField = false;
+                    scope.slideshowField = false;
 
                     scope.originalModel = scope.model;
                     scope.originalPage = '';       //never initialized if no posts have ever been made
@@ -34,9 +35,11 @@ function editField(postsService) {
                         scope.textField = true;
                     } else if (scope.tag == 'image') {
                         scope.imageField = true;
-                    } else if (scope.tag = 'testemonial') {
+                    } else if (scope.tag == 'testemonial') {
                         scope.testemonialField = true;
                         scope.originalAuthor = scope.author;
+                    } else if (scope.tag == 'slideshow') {
+                        scope.slideshowField = true;
                     }
                 },
                 post : function(scope, elem, attr) {
@@ -251,36 +254,38 @@ function editField(postsService) {
                     }
 
                     scope.loadPopupData = function() {
-                        //load data based on title and tag
-                        postsService.fetchPostsByTitleTag({'title': scope.title, 'tag' : scope.tag})
-                            .then(function (data) {
-                                scope.posts = data;
-                                setInitialActive();
+                        if (!scope.slideshowField) {
+                            //load data based on title and tag
+                            postsService.fetchPostsByTitleTag({'title': scope.title, 'tag': scope.tag})
+                                .then(function (data) {
+                                    scope.posts = data;
+                                    setInitialActive();
 
-                                //also fetch images if currently editing an image post
-                                if (scope.imageField) {
-                                    //only post that should be updated for images, initialize as list for consistency
-                                    if (scope.posts.length) {
-                                        scope.originalImagePost = [scope.posts[0]];
-                                        var param = {'active' : scope.posts[0].text};
-                                    } else {
-                                        scope.originalImagePost = null;
-                                        var param = {'active' : null};
+                                    //also fetch images if currently editing an image post
+                                    if (scope.imageField) {
+                                        //only post that should be updated for images, initialize as list for consistency
+                                        if (scope.posts.length) {
+                                            scope.originalImagePost = [scope.posts[0]];
+                                            var param = {'active': scope.posts[0].text};
+                                        } else {
+                                            scope.originalImagePost = null;
+                                            var param = {'active': null};
+                                        }
+
+                                        //pass in path of current image to avoid refetching it
+                                        postsService.fetchImages(param)
+                                            .then(function (data) {
+                                                //add images to list of data
+                                                for (var i = 0; i < data.length; i++) {
+                                                    scope.posts.push(data[i]);
+                                                }
+                                            });
                                     }
-
-                                    //pass in path of current image to avoid refetching it
-                                    postsService.fetchImages(param)
-                                        .then(function(data) {
-                                            //add images to list of data
-                                            for (var i = 0; i < data.length; i++) {
-                                                scope.posts.push(data[i]);
-                                            }
-                                        });
-                                }
-                            },
-                            function(data) {
-                                console.log('error: ' + data);
-                            });
+                                },
+                                function (data) {
+                                    console.log('error: ' + data);
+                                });
+                        }
 
                         $(elem).find('.editFieldModal').modal('show');
                         scope.showNewPostField = false;

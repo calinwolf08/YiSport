@@ -62,6 +62,16 @@ function postsService($http) {
                         console.log('failed to save posts');
                         return null;
                     });
+        },
+        fetchSlideshowImages : function() {
+            return $http.post("/serivce/fetchSlideshowImages")
+                .then(function (response) {
+                        return response.data;
+                    }
+                    ,function (response) {
+                        console.log('failed to save posts');
+                        return null;
+                    });
         }
     }
 }

@@ -1,0 +1,41 @@
+<div class="modal fade editFieldModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h1 class="modal-title">{% raw %}{{ title | capitalize }}{% endraw %} Posts So Far</h1>
+      </div>
+      <div class="modal-body">
+        <p>Select a post to activate it. Click the + to add a new post. Click - to remove new posts.</p>
+        <p>Click submit to save new posts. Click outside popup to preview change.</p>
+        <div class="row">
+          <div class="" ng-show="showNewPostField" style="padding-left: 5%; padding-right: 5%">
+            <form method="post" enctype="multipart/form-data">
+              <button class="btn btn-primary newFile" name="file" accept=".png, .jpg, .gif"
+                class="form-control" type="file">Upload New Image</button>
+              </br>
+              <button style="margin-top: 10px;" ng-click="addNewImage()" class="btn button-primary">Submit Image</button>
+            </form>
+          </div>
+        </div>
+        <div class="row" style="padding-left: 20px; padding-top: 10px;">
+          <span ng-click="enterNewPost()" class="glyphicon glyphicon-plus"></span>
+          <span ng-click="removeNewPosts()" class="glyphicon glyphicon-minus"></span>
+        </div>
+        <div class="container-fluid pre-scrollable row" style="max-height: 450px;">
+          <div ng-if="imageField" ng-repeat="post in posts">
+            <div class="my-container col-md-4" ng-class="{selected: $index == selectedRow}" ng-click="toggleSelected($index)">
+              <img ng-src="{% raw %}{{ post.text }}{% endraw %}"
+                class="my-thumbnail img-responsive"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="removeNewPosts()" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="savePostChanges()" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
