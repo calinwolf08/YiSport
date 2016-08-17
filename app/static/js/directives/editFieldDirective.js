@@ -155,27 +155,29 @@ function editField(postsService) {
                         var form = new FormData();
 
                         form.append('file', file);
-                        
-                        var newPost = {};
 
                         postsService.saveNewImage(form)
                             .then(function(data) {
-                                newPost.text = data;
+                                if (scope.imageField) {
+                                    var newPost = {text : data};
 
-                                //set this post to original post if it hasn't already been set
-                                if (!scope.originalImagePost) {
-                                    scope.originalImagePost = [newPost];
+                                    //set this post to original post if it hasn't already been set
+                                    if (!scope.originalImagePost) {
+                                        scope.originalImagePost = [newPost];
+                                    }
+
+                                    newPost = fillOutNewPost(newPost);
+
+                                    //add new row
+                                    scope.posts.unshift(newPost);
+                                    scope.selectedRow = 0;
+                                    //update  model
+                                    scope.toggleSelected(0);
+                                } else if (scope.slideshowField) {
+                                    postsService.addNewSlideshowImage({'path' : data});
+                                    scope.slideshowImages.unshift({'path' : data, 'active' : true});
                                 }
 
-                                newPost = fillOutNewPost(newPost);
-
-                                //add new row
-                                scope.posts.unshift(newPost);
-                                scope.selectedRow = 0;
-                                //update  model
-                                scope.toggleSelected(0);
-
-                                return newPost;
                             });
                     }
 
@@ -238,6 +240,22 @@ function editField(postsService) {
                         }
                     }
 
+                    scope.updateImageList = function() {
+                        scope.model.splice(0, scope.model.length);
+
+                        //update images used in slideshow
+                        for (var i = 0; i < scope.slideshowImages.length; i++) {
+                            if (scope.slideshowImages[i].active) {
+                                console.log('active: ' + scope.slideshowImages[i].path);
+                                scope.model.push(scope.slideshowImages[i]);
+                            } else {
+                                console.log('inactive: ' + scope.slideshowImages[i].path);
+                            }
+                        }
+
+                        postsService.updateSlideshowImages({'images' : scope.slideshowImages});
+                    }
+
                     scope.toggleSelected = function(row) {
                         scope.posts[scope.selectedRow].active = false;
                         scope.selectedRow = row;
@@ -285,6 +303,13 @@ function editField(postsService) {
                                 function (data) {
                                     console.log('error: ' + data);
                                 });
+                        } else if (!scope.slideshowImages) {
+                            postsService.fetchSlideshowImages({'getActive' : false})
+                                .then(function (data) {
+                                    if (data && data.length) {
+                                        scope.slideshowImages = data;
+                                    }
+                                });
                         }
 
                         $(elem).find('.editFieldModal').modal('show');
@@ -293,7 +318,6 @@ function editField(postsService) {
                     };
                 }
             }
-
         }
     }
 }

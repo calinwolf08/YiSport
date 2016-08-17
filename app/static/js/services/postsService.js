@@ -63,13 +63,33 @@ function postsService($http) {
                         return null;
                     });
         },
-        fetchSlideshowImages : function() {
-            return $http.post("/serivce/fetchSlideshowImages")
+        fetchSlideshowImages : function(data) {
+            return $http.post("/serivce/fetchSlideshowImages", JSON.stringify(data))
                 .then(function (response) {
                         return response.data;
                     }
                     ,function (response) {
-                        console.log('failed to save posts');
+                        console.log('failed to fetch slideshow images');
+                        return null;
+                    });
+        },
+        addNewSlideshowImage : function(data) {
+            return $http.post("/serivce/addNewSlideshowImage", JSON.stringify(data))
+                .then(function (response) {
+                        return response.data;
+                    }
+                    ,function (response) {
+                        console.log('failed to add new slideshow images');
+                        return null;
+                    });
+        },
+        updateSlideshowImages : function(data) {
+            return $http.post("/serivce/updateSlideshowImages", JSON.stringify(data))
+                .then(function (response) {
+                        return response.data;
+                    }
+                    ,function (response) {
+                        console.log('failed to update slideshow images');
                         return null;
                     });
         }

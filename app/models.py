@@ -44,6 +44,7 @@ class Image(Model):
 
 class SlideShowImage(Model):
     image = ForeignKeyField(Image, related_name='slideshowImage')
+    active = BooleanField(default=True)
 
     class Meta:
         database = db
@@ -106,11 +107,10 @@ if __name__ == '__main__':
     PagePost(page="index", title="testemonial", tag="testemonial",
              text="Definitively the best TKD school in Washington. Not just for Sport TKD but for conditioning of the mind and body for kids. One of my favorite aspects of the training are the life lessons that are taught at the end of every class. Respect, confidence, motivation, and self belief are the core teachings at Yi Sport TKD.",
              active="true", author="Gene Shin").save()
-
-    SlideShowImage(image=2).save()
-    SlideShowImage(image=3).save()
-    SlideShowImage(image=4).save()
-    SlideShowImage(image=5).save()
-    SlideShowImage(image=6).save()
     """
+    SlideShowImage(image=2, active=True).save()
+    SlideShowImage(image=3, active=True).save()
+    SlideShowImage(image=4, active=True).save()
+    SlideShowImage(image=5, active=True).save()
+    SlideShowImage(image=6, active=True).save()
 

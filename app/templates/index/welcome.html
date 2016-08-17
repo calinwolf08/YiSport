@@ -22,7 +22,7 @@
       {% if g.user.is_authenticated %}
         edit-field tag="image" title="welcome" model="welcomeImg"
       {% endif %}
-      class="pics-container">
+      class="pics-container slideanim">
       <img ng-src="{% raw %}{{ welcomeImg }}{% endraw %}"
            class="my-img img-rounded img-responsive"/>
     </div>

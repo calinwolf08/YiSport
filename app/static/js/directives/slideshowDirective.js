@@ -13,15 +13,14 @@ function slideShow(postsService) {
                     scope.pause = false;
                     scope.timeout = 4500;
 
-                    postsService.fetchSlideshowImages()
+                    postsService.fetchSlideshowImages({'getActive' : true})
                         .then(function(data) {
-                            if (data.length) {
+                            if (data && data.length) {
                                 for(var i = 0; i < data.length; i++) {
                                     scope.images.push(data[i]);
                                 }
                                 
                                 $(elem).css('background-image', 'url(' + scope.images[0]['path'] + ')');
-                                console.log(scope.images);
                             }
                         });
                 },
@@ -31,9 +30,18 @@ function slideShow(postsService) {
                             return;
                         }
 
-                        $(elem).fadeOut(750, function() {
-                            $(elem).css('background-image', 'url(' + scope.images[scope.index]['path'] + ')');
-                            $(elem).fadeIn(750);
+                        var path = '';
+
+                        if (scope.index >= scope.images.length) {
+                            scope.index = 0;
+                            path = scope.images[scope.index]['path'];
+                        } else {
+                            path = scope.images[scope.index]['path'];
+                        }
+
+                        $(elem).fadeTo(750, 0, function() {
+                            $(elem).css('background-image', 'url(' + path + ')');
+                            $(elem).fadeTo(750, 1, function() {});
                         });
 
                         scope.index = (scope.index < scope.images.length - 1 ? scope.index + 1 : 0);

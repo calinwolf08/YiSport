@@ -12,42 +12,43 @@
         <div class="row">
           <div class="" ng-show="showNewPostField" style="padding-left: 5%; padding-right: 5%">
             <form method="post" enctype="multipart/form-data">
-              <button class="btn btn-primary newFile" name="file" accept=".png, .jpg, .gif"
-                class="form-control" type="file">Upload New Image</button>
-              <button class="btn btn-primary" class="form-control">Add Existing Image</button>
+              <input class="btn btn-primary newFile" name="file" accept=".png, .jpg, .gif"
+                class="form-control" type="file" value="Upload New Image"/>
+              <button style="margin-top: 5px;" class="btn btn-primary" class="form-control">Add Existing Image</button>
               </br>
-              </br>
-              <button style="margin-top: 10px;" ng-click="addNewImage()" class="btn button-primary">Submit Image</button>
+              <button style="margin-top: 5px;" ng-click="addNewImage()" class="btn btn-default">Submit Image</button>
             </form>
           </div>
         </div>
-        <div class="row" style="padding-left: 20px; padding-top: 10px;">
+        <div class="row" style="padding-left: 20px; padding-top: 5px;">
           <span ng-click="enterNewPost()" class="glyphicon glyphicon-plus"></span>
           <span ng-click="removeNewPosts()" class="glyphicon glyphicon-minus"></span>
         </div>
-        <div class="container-fluid pre-scrollable row" style="max-height: 450px;">
+        <div class="container-fluid pre-scrollable row modalTableDiv">
           <!-- for text and testemonial fields -->
           <table class="table">
             <thead>
               <th>Image</th>
               <th>Active</th>
             </thead>
-            <tr ng-repeat="img in model" ng-class="{selected: $index == selectedRow}"
-                ng-click="toggleSelected($index)">
-
+            <tr ng-repeat="img in slideshowImages" ng-class="{selected: $index == selectedRow}">
               <td>
                 <img ng-src="{% raw %}{{ img.path }}{% endraw %}"
                 class="my-thumbnail img-responsive"/>
               </td>
 
-              <td ng-bind="img.isActive"></td>
+              <td>
+                <div class="checkbox">
+                  <label><input type="checkbox" ng-model="img.active" /></label>
+                </div>
+              </td>
             </tr>
           </table>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="removeNewPosts()" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" ng-click="savePostChanges()" data-dismiss="modal">Submit</button>
+        <button type="button" class="btn btn-default" ng-click="" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="updateImageList()" data-dismiss="modal">Submit</button>
       </div>
     </div>
   </div>

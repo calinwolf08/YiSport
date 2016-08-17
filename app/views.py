@@ -53,7 +53,6 @@ def blog():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    print('here')
     if g.user is not None and g.user.is_authenticated:
         return redirect(url_for('index'))
 
@@ -138,20 +137,26 @@ def removeImages():
 
     return jsonify(success=True)
 
-@app.route('/serivce/fetchSlideshowImages', methods=['POST'])
+@app.route('/serivce/fetchSlideshowImages', methods=['GET', 'POST'])
 def fetchSlideshowImages():
+
+    get_active = request.get_json().get('getActive')
     images = []
 
-    for img in models.Image.select().join(models.SlideShowImage).where(models.Image.image == models.SlideShowImage.image):
-        images.append(img)
+    #only get active slideshow images
+    if get_active:
+        query = models.Image.select(models.Image.path, models.SlideShowImage.active) \
+            .join(models.SlideShowImage) \
+            .where(models.Image.image == models.SlideShowImage.image and models.SlideShowImage.active ==  True).naive()
+    #get all slideshow images
+    else:
+        query = models.Image.select(models.Image.path, models.SlideShowImage.active) \
+            .join(models.SlideShowImage).where(models.Image.image == models.SlideShowImage.image).naive()
 
-    paths = []
+    for img in query:
+        images.append({'path' : img.path, 'active' : img.active})
 
-    for img in images:
-        temp = {'path': img.path}
-        paths.append(temp)
-
-    return json.dumps(paths)
+    return json.dumps(images)
 
 @app.route('/serivce/saveUpdatePosts', methods=['POST'])
 def saveUpdatePosts():
@@ -170,6 +175,29 @@ def saveUpdatePosts():
         temp.save()
 
     return json.dumps({})
+
+@app.route('/serivce/addNewSlideshowImage', methods=['GET', 'POST'])
+def addNewSlideshowImage():
+    path = request.get_json().get('path')
+
+    img = models.Image.select().where(models.Image.path == path).get()[0]
+
+    models.SlideShowImage(image_id = img['image'], active = True).save()
+
+    return jsonify(success=True)
+
+@app.route('/serivce/updateSlideshowImages', methods=['GET', 'POST'])
+def updateSlideshowImages():
+    images = request.get_json().get('images')
+
+    for img in images:
+        curSsImage = models.SlideShowImage.select() \
+            .join(models.Image) \
+            .where(models.Image.path == img['path']).get()
+        curSsImage.active = img['active']
+        curSsImage.save()
+
+    return jsonify(success=True)
 
 @app.route('/directives/editField.html', methods=['GET', 'POST'])
 def editField():

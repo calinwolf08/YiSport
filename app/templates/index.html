@@ -3,8 +3,11 @@
 {% block content %}
 
   <div ng-controller="indexController">
-    <div edit-field tag="slideshow" title="slideshow" model="images">
-      <div class="jumbotron cover-img" slide-show images="images"></div>
+    <div
+      {% if g.user.is_authenticated %}
+        edit-field tag="slideshow" title="slideshow" model="images"
+      {% endif %}>
+      <div class="jumbotron" slide-show images="images"></div>
     </div>
 
     <div custom-layout>
@@ -20,7 +23,7 @@
         {% include 'index/testemonials.html' %}
       </div>
 
-      <div id="news">
+      <div>
         {% include 'index/news.html' %}
       </div>
 
