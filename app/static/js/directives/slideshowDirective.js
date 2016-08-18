@@ -9,7 +9,7 @@ function slideShow(postsService) {
         compile : function (scope, element, attributes) {
             return {
                 pre : function(scope, elem, attr) {
-                    scope.index = 0;
+                    scope.index = 1;
                     scope.pause = false;
                     scope.timeout = 4500;
 
@@ -30,19 +30,20 @@ function slideShow(postsService) {
                             return;
                         }
 
-                        var path = '';
+                        if (scope.images.length > 1) {
+                            var path = '';
 
-                        if (scope.index >= scope.images.length) {
-                            scope.index = 0;
-                            path = scope.images[scope.index]['path'];
-                        } else {
-                            path = scope.images[scope.index]['path'];
+                            if (scope.index >= scope.images.length) {
+                                scope.index = 0;
+                            }
+
+                            path = scope.images[scope.index]['path'].replace(/[\\]/g, '\\\\');
+
+                            $(elem).fadeTo(750, 0, function() {
+                                $(elem).css('background-image', 'url(' + path + ')');
+                                $(elem).fadeTo(750, 1, function() {});
+                            });
                         }
-
-                        $(elem).fadeTo(750, 0, function() {
-                            $(elem).css('background-image', 'url(' + path + ')');
-                            $(elem).fadeTo(750, 1, function() {});
-                        });
 
                         scope.index = (scope.index < scope.images.length - 1 ? scope.index + 1 : 0);
 

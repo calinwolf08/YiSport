@@ -14,7 +14,7 @@
             <form method="post" enctype="multipart/form-data">
               <input class="btn btn-primary newFile" name="file" accept=".png, .jpg, .gif"
                 class="form-control" type="file" value="Upload New Image"/>
-              <button style="margin-top: 5px;" class="btn btn-primary" class="form-control">Add Existing Image</button>
+              <button style="margin-top: 5px;" ng-click="selectExistingImage()" class="btn btn-primary">Add Existing Image</button>
               </br>
               <button style="margin-top: 5px;" ng-click="addNewImage()" class="btn btn-default">Submit Image</button>
             </form>
@@ -31,15 +31,14 @@
               <th>Image</th>
               <th>Active</th>
             </thead>
-            <tr ng-repeat="img in slideshowImages" ng-class="{selected: $index == selectedRow}">
+            <tr ng-repeat="img in slideshowImages">
               <td>
                 <img ng-src="{% raw %}{{ img.path }}{% endraw %}"
                 class="my-thumbnail img-responsive"/>
               </td>
-
               <td>
                 <div class="checkbox">
-                  <label><input type="checkbox" ng-model="img.active" /></label>
+                  <label><input class="checkbox-lg" type="checkbox" ng-model="img.active" /></label>
                 </div>
               </td>
             </tr>
@@ -53,3 +52,5 @@
     </div>
   </div>
 </div>
+
+{% include 'directives/existingImagesModal.html' %}

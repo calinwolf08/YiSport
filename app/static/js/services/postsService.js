@@ -73,16 +73,6 @@ function postsService($http) {
                         return null;
                     });
         },
-        addNewSlideshowImage : function(data) {
-            return $http.post("/serivce/addNewSlideshowImage", JSON.stringify(data))
-                .then(function (response) {
-                        return response.data;
-                    }
-                    ,function (response) {
-                        console.log('failed to add new slideshow images');
-                        return null;
-                    });
-        },
         updateSlideshowImages : function(data) {
             return $http.post("/serivce/updateSlideshowImages", JSON.stringify(data))
                 .then(function (response) {
@@ -90,6 +80,16 @@ function postsService($http) {
                     }
                     ,function (response) {
                         console.log('failed to update slideshow images');
+                        return null;
+                    });
+        },
+        fetchAvailableImages : function() {
+            return $http.post("/serivce/fetchAvailableImages")
+                .then(function (response) {
+                        return response.data;
+                    }
+                    ,function (response) {
+                        console.log('failed to fetch available images for slideshow');
                         return null;
                     });
         }

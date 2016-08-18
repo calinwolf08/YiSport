@@ -6,6 +6,7 @@ from app import app, models, login_manager
 from .forms import LoginForm
 from playhouse.shortcuts import model_to_dict
 from werkzeug import secure_filename
+from peewee import JOIN
 import os
 
 @login_manager.user_loader
@@ -176,28 +177,34 @@ def saveUpdatePosts():
 
     return json.dumps({})
 
-@app.route('/serivce/addNewSlideshowImage', methods=['GET', 'POST'])
-def addNewSlideshowImage():
-    path = request.get_json().get('path')
-
-    img = models.Image.select().where(models.Image.path == path).get()[0]
-
-    models.SlideShowImage(image_id = img['image'], active = True).save()
-
-    return jsonify(success=True)
-
 @app.route('/serivce/updateSlideshowImages', methods=['GET', 'POST'])
 def updateSlideshowImages():
     images = request.get_json().get('images')
 
     for img in images:
-        curSsImage = models.SlideShowImage.select() \
-            .join(models.Image) \
-            .where(models.Image.path == img['path']).get()
-        curSsImage.active = img['active']
-        curSsImage.save()
+        if 'isNew' in img.keys():
+            curImage = models.Image.select().where(models.Image.path == img['path']).get()
+            models.SlideShowImage(image_id=curImage.image, active=True).save()
+        else:
+            curSsImage = models.SlideShowImage.select() \
+                .join(models.Image) \
+                .where(models.Image.path == img['path']).get()
+            curSsImage.active = img['active']
+            curSsImage.save()
 
     return jsonify(success=True)
+
+@app.route('/serivce/fetchAvailableImages', methods=['GET', 'POST'])
+def fetchAvailableImages():
+    images = []
+
+    query = models.Image.select().join(models.SlideShowImage, JOIN.LEFT_OUTER).where(models.SlideShowImage.image == None)
+
+    for img in query:
+        temp = {'text': img.path}
+        images.append(temp)
+
+    return json.dumps(images)
 
 @app.route('/directives/editField.html', methods=['GET', 'POST'])
 def editField():

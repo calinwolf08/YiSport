@@ -3,7 +3,6 @@
  * <div edit-field="text" title="welcome" model="welcomText"></div>
  */
 function editField(postsService) {
-
     return {
         scope : {
             model : '=',    //object that will be edited
@@ -79,6 +78,11 @@ function editField(postsService) {
                         }
                     }
 
+                    /**
+                     * updates posts in database
+                     * for images:
+                     *      update original image to current selected image
+                     */
                     scope.savePostChanges = function () {
                         if (scope.textField || scope.testemonialField) {
                             postsService.saveUpdatePosts({'posts' : scope.posts});
@@ -149,9 +153,46 @@ function editField(postsService) {
                         return newPost;
                     }
 
+                    /**
+                     * Fetch images that arent already in the slideshow
+                     */
+                    scope.selectExistingImage = function() {
+
+                        postsService.fetchAvailableImages()
+                            .then(function(data) {
+                                if (data) {
+                                    scope.posts = data;
+                                }
+
+                                $(elem).find('.selectImageModal').modal('show');
+                            });
+                    }
+
+                    /**
+                     * add existing image to slideshowImages
+                     */
+                    scope.addExistingImage = function() {
+                        var curImage = scope.posts[scope.selectedRow];
+                        scope.slideshowImages.push(
+                            {
+                                'path' : curImage.text,
+                                'active' : true,
+                                'isNew' : true,
+                                'exists' : true
+                            });
+                    }
+
+                    /**
+                     * Add new file to database and modal lists
+                     */
                     scope.addNewImage = function() {
                         //get image file
                         var file = $(elem).find('.newFile')[0].files[0];
+
+                        if (!file) {
+                            return;
+                        }
+
                         var form = new FormData();
 
                         form.append('file', file);
@@ -174,13 +215,14 @@ function editField(postsService) {
                                     //update  model
                                     scope.toggleSelected(0);
                                 } else if (scope.slideshowField) {
-                                    postsService.addNewSlideshowImage({'path' : data});
-                                    scope.slideshowImages.unshift({'path' : data, 'active' : true});
+                                    scope.slideshowImages.unshift({'path' : data, 'active' : true, 'isNew' : true});
                                 }
-
                             });
                     }
 
+                    /**
+                     * create new text or image post
+                     */
                     scope.addNewPost = function() {
                         var newPost = {};
 
@@ -216,6 +258,17 @@ function editField(postsService) {
                         scope.showNewPostField = true;
                     }
 
+                    /**
+                     * for text fields:
+                     *      just remove new posts
+                     *      reset original selected post
+                     * for image fields:
+                     *      remove new images from database
+                     *      reset original selected image
+                     * for slideshow fields:
+                     *      remove new images from database
+                     *      remove new images from slideshowImages
+                     */
                     scope.removeNewPosts = function() {
                         for (var i = 0; i < scope.posts.length; i++) {
                             //at the start of original posts
@@ -234,28 +287,49 @@ function editField(postsService) {
                                     scope.posts[0].text = scope.originalModel;
                                     scope.toggleSelected(0);
                                 });
-                        } else {
+                        } else if (scope.textField && scope.testemonialField) {
                             scope.posts.splice(0, i);
                             scope.toggleSelected(0);
+                        } else if (scope.slideshowField) {
+                            var imagesToRemove = [];
+
+                            //remove images from slideshowImages
+                            for (var i = scope.slideshowImages.length - 1; i >= 0; i--) {
+                                if (scope.slideshowImages[i].isNew) {
+                                    if (!scope.slideshowImages[i].exists) {
+                                        imagesToRemove.push({'text' : scope.slideshowImages[i].path});
+                                    }
+
+                                    scope.slideshowImages.splice(i, 1);
+                                }
+                            }
+
+                            //remove image from database
+                            postsService.removeImages({'posts' : imagesToRemove});
                         }
                     }
 
+                    /**
+                     * replace model images with active images from slideshowImages
+                     * update values in slideshow table
+                     */
                     scope.updateImageList = function() {
+                        var imagesToUpdate = [];
                         scope.model.splice(0, scope.model.length);
 
                         //update images used in slideshow
                         for (var i = 0; i < scope.slideshowImages.length; i++) {
                             if (scope.slideshowImages[i].active) {
-                                console.log('active: ' + scope.slideshowImages[i].path);
                                 scope.model.push(scope.slideshowImages[i]);
-                            } else {
-                                console.log('inactive: ' + scope.slideshowImages[i].path);
                             }
                         }
 
-                        postsService.updateSlideshowImages({'images' : scope.slideshowImages});
+                        postsService.updateSlideshowImages({'images' : slideshowImages});
                     }
 
+                    /**
+                     * toggle selected image or post - which updates main view
+                     */
                     scope.toggleSelected = function(row) {
                         scope.posts[scope.selectedRow].active = false;
                         scope.selectedRow = row;
@@ -271,6 +345,9 @@ function editField(postsService) {
                         post.active = true;
                     }
 
+                    /**
+                     * load data for pop ups
+                     */
                     scope.loadPopupData = function() {
                         if (!scope.slideshowField) {
                             //load data based on title and tag

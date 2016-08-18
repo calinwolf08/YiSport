@@ -26,6 +26,11 @@
     max-height: 300px;
 }
 
+.checkbox-lg {
+    width: 30px;
+    height: 30px;
+}
+
 .my-container {
     padding: 5px;
     text-align: center;
