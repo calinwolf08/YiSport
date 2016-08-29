@@ -182,7 +182,7 @@ def updateSlideshowImages():
     images = request.get_json().get('images')
 
     for img in images:
-        if 'isNew' in img.keys():
+        if 'isNew' in img.keys() and img['isNew'] == True:
             curImage = models.Image.select().where(models.Image.path == img['path']).get()
             models.SlideShowImage(image_id=curImage.image, active=True).save()
         else:

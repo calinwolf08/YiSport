@@ -9,9 +9,10 @@ function slideShow(postsService) {
         compile : function (scope, element, attributes) {
             return {
                 pre : function(scope, elem, attr) {
-                    scope.index = 1;
+                    scope.index = 0;
                     scope.pause = false;
-                    scope.timeout = 4500;
+                    scope.timeout = 8000;
+                    scope.lastPath = '';
 
                     postsService.fetchSlideshowImages({'getActive' : true})
                         .then(function(data) {
@@ -19,34 +20,37 @@ function slideShow(postsService) {
                                 for(var i = 0; i < data.length; i++) {
                                     scope.images.push(data[i]);
                                 }
-                                
+
+                                scope.lastPath = scope.images[0]['path'];
                                 $(elem).css('background-image', 'url(' + scope.images[0]['path'] + ')');
                             }
                         });
                 },
                 post : function(scope, elem, attr) {
+                    /**
+                     * function to transition to next image in slideshow
+                     */
                     scope.slideIt = function() {
+                        //don't transition if paused
                         if (scope.pause) {
                             return;
                         }
 
-                        if (scope.images.length > 1) {
-                            var path = '';
-
-                            if (scope.index >= scope.images.length) {
-                                scope.index = 0;
-                            }
-
-                            path = scope.images[scope.index]['path'].replace(/[\\]/g, '\\\\');
-
-                            $(elem).fadeTo(750, 0, function() {
-                                $(elem).css('background-image', 'url(' + path + ')');
-                                $(elem).fadeTo(750, 1, function() {});
-                            });
-                        }
-
                         scope.index = (scope.index < scope.images.length - 1 ? scope.index + 1 : 0);
 
+                        var path = scope.images[scope.index]['path'].replace(/[\\]/g, '\\\\');
+
+                        //only change image if paths are different
+                        if (scope.lastPath != path) {
+                            $(elem).fadeTo(1000, 0, function() {
+                                $(elem).css('background-image', 'url(' + path + ')');
+                                $(elem).fadeTo(1000, 1, function() {});
+                            });
+
+                            scope.lastPath = path;
+                        }
+
+                        //call again after set timeout
                         setTimeout(function() {
                             scope.slideIt();
                         }, scope.timeout);

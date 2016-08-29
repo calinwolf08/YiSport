@@ -9,6 +9,11 @@
     margin-top: 50px;
 }
 
+.myBtn {
+    border-radius: 0;
+    margin: 5px;
+}
+
 .btn-primary {
     background-color: #8C489F;
     border-color: #000;

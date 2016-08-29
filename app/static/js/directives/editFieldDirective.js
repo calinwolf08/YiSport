@@ -53,6 +53,9 @@ function editField(postsService) {
                         $(elem).find('.icon').css('visibility', 'hidden');
                     });
 
+                    /**
+                     * Organizes posts for pop up and stores current page
+                     */
                     var setInitialActive = function(){
                         for (var i = 0; i < scope.posts.length; i++) {
                             if (scope.posts[i].active == true) {
@@ -324,7 +327,12 @@ function editField(postsService) {
                             }
                         }
 
-                        postsService.updateSlideshowImages({'images' : slideshowImages});
+                        postsService.updateSlideshowImages({'images' : scope.slideshowImages})
+                            .then(function() {
+                                for (var i = 0; i < scope.slideshowImages.length; i++) {
+                                    scope.slideshowImages[i].isNew = false;
+                                }
+                            });
                     }
 
                     /**
