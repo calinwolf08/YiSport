@@ -2,7 +2,7 @@ from peewee import *
 import datetime
 # from pprint import pprint
 
-db = MySQLDatabase('YiSportTKD', user="calin", password="")
+db = MySQLDatabase('yisport', user="calin", password="")
 
 """
 create slideshow table with fk to images
@@ -74,43 +74,61 @@ class PagePost(Model):
 
 if __name__ == '__main__':
     db.connect()
-    db.drop_tables([SlideShowImage], safe = True)
+    db.drop_tables([SlideShowImage], safe=True)
     db.create_tables([SlideShowImage], safe = True)
-    """
-    PagePost(page="index", title="welcome", tag="text",
-             text="welcome to yisport tkd welcome to yisport tkd welcome to yisport tkd",
-             active="true").save()
-    PagePost(page="index", title="welcome", tag="image",
-             text = "static/images/post/kick.jpg",
-             active = "true").save()
+    # User(email='admin', password='admin').save()
 
-    PagePost(page="index", title="values", tag="text",
-             text="being good and stuff", path="static/images/post/bow.jpg",
-             active="true").save()
-    PagePost(page="index", title="values", tag="image",
-             text="static/images/post/bow.jpg",
-             active="true").save()
+    # db.drop_tables([User, Image, SlideShowImage, BlogPost, PagePost], safe = True)
+    # db.create_tables([User, Image, SlideShowImage, BlogPost, PagePost], safe = True)
+    #
+    # Image(path="static/images/post/bow.jpg", type="post").save()
+    # Image(path="static/images/post/kick.jpg", type="post").save()
+    # Image(path="static/images/post/pose.jpg", type="post").save()
+    # Image(path="static/images/post/trophy.jpg", type="post").save()
+    # Image(path="static/images/post/womens_team.jpg", type="post").save()
+    # Image(path="static/images/transparent_logo.png", type="logo").save()
+    # Image(path="static/images/transparent_logo_name.png", type="logo").save()
+    # Image(path="static/images/yisporttkd_logo1.jpg", type="logo").save()
+    #
 
-    PagePost(page="index", title="news", tag="text",
-             text="news, dates, etc",
-             active="true").save()
-    PagePost(page="index", title="news", tag="image",
-             text="static/images/post/trophy.jpg",
-             active="true").save()
+    # PagePost(page="index", title="banner", tag="image",
+    #          text = "static/images/post/pose.jpg",
+    #          active = "true").save()
 
-    PagePost(page="index", title="testemonial", tag="testemonial",
-             text="While I’m sure there are many caring coaches and instructors in Seattle, Yi Sport TKD stood out to my wife and I after watching our first class, and seeing the high level of instruction.  After seeing the Yi Sport team compete at a local Seattle Tae Kwon Do tournament, we haven’t looked back since and have no doubt about the choice we made for our kids.",
-             active="true", author="Graeme Gibson").save()
-    PagePost(page="index", title="testemonial", tag="testemonial",
-             text="My son Dante has been with Yi Sports for over two years. He loves being a part of the team. I love it because Coach Lee’s practice focuses on fitness, respect and good sportsmanship. Not only will my son do well at Taekwondo he will excel at any sport he does because of the strength and fitness that Yi Sports is building in him.",
-             active="true", author="Parvana Saladino").save()
-    PagePost(page="index", title="testemonial", tag="testemonial",
-             text="Definitively the best TKD school in Washington. Not just for Sport TKD but for conditioning of the mind and body for kids. One of my favorite aspects of the training are the life lessons that are taught at the end of every class. Respect, confidence, motivation, and self belief are the core teachings at Yi Sport TKD.",
-             active="true", author="Gene Shin").save()
-    """
-    SlideShowImage(image=2, active=True).save()
-    SlideShowImage(image=3, active=True).save()
-    SlideShowImage(image=4, active=True).save()
-    SlideShowImage(image=5, active=True).save()
-    SlideShowImage(image=6, active=True).save()
+    # PagePost(page="index", title="welcome", tag="text",
+    #          text="welcome to yisport tkd welcome to yisport tkd welcome to yisport tkd",
+    #          active="true").save()
+    # PagePost(page="index", title="welcome", tag="image",
+    #          text = "static/images/post/kick.jpg",
+    #          active = "true").save()
+    #
+    # PagePost(page="index", title="values", tag="text",
+    #          text="being good and stuff", path="static/images/post/bow.jpg",
+    #          active="true").save()
+    # PagePost(page="index", title="values", tag="image",
+    #          text="static/images/post/bow.jpg",
+    #          active="true").save()
+    #
+    # PagePost(page="index", title="news", tag="text",
+    #          text="news, dates, etc",
+    #          active="true").save()
+    # PagePost(page="index", title="news", tag="image",
+    #          text="static/images/post/trophy.jpg",
+    #          active="true").save()
+    #
+    # PagePost(page="index", title="testemonial", tag="testemonial",
+    #          text="While I’m sure there are many caring coaches and instructors in Seattle, Yi Sport TKD stood out to my wife and I after watching our first class, and seeing the high level of instruction.  After seeing the Yi Sport team compete at a local Seattle Tae Kwon Do tournament, we haven’t looked back since and have no doubt about the choice we made for our kids.",
+    #          active="true", author="Graeme Gibson").save()
+    # PagePost(page="index", title="testemonial", tag="testemonial",
+    #          text="My son Dante has been with Yi Sports for over two years. He loves being a part of the team. I love it because Coach Lee’s practice focuses on fitness, respect and good sportsmanship. Not only will my son do well at Taekwondo he will excel at any sport he does because of the strength and fitness that Yi Sports is building in him.",
+    #          active="true", author="Parvana Saladino").save()
+    # PagePost(page="index", title="testemonial", tag="testemonial",
+    #          text="Definitively the best TKD school in Washington. Not just for Sport TKD but for conditioning of the mind and body for kids. One of my favorite aspects of the training are the life lessons that are taught at the end of every class. Respect, confidence, motivation, and self belief are the core teachings at Yi Sport TKD.",
+    #          active="true", author="Gene Shin").save()
+
+    # SlideShowImage(image=1, active=True).save()
+    # SlideShowImage(image=2, active=True).save()
+    # SlideShowImage(image=3, active=True).save()
+    # SlideShowImage(image=4, active=True).save()
+    # SlideShowImage(image=5, active=True).save()
 

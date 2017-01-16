@@ -2,39 +2,91 @@
 
 {% block content %}
 
-  <div ng-controller="indexController">
-    <div
-      {% if g.user.is_authenticated %}
-        edit-field tag="slideshow" title="slideshow" model="images"
-      {% endif %}>
-      <div class="jumbotron" slide-show images="images"></div>
+    <div ng-controller="indexController">
+        <div class="banner_container"
+                {% if g.user.is_authenticated %}
+                    {#        edit-field tag="slideshow" title="slideshow" model="images"#}
+             edit-field tag="image" title="banner" model="bannerImg"
+                {% endif %}>
+            <div class="jumbotron"
+                 style="background-image: url({% raw %}{{ bannerImg }}{% endraw %})">
+                <!--<img class="my-img img-responsive" src="/static/images/transparent_logo_name.png" \>-->
+                <div class="banner_inner_container">
+                    <h5 class="banner_title">Yi Sport Taekwondo</h5>
+                    <hr>
+                    <div class="banner_buttons">
+{#                        <a class="" href="{{ url_for('about') }}">About Us!</a>#}
+                        <a class=" smoothScroll" href="#about">About Us!</a>
+                        <a class=" smoothScroll" href="#contact">Sign Up!</a>
+                    </div>
+                </div>
+                <!--
+                <div class="banner_menu_button">
+                    <a class=" smoothScroll" href="#welcome">
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </a>
+                </div>-->
+            </div> <!--slide-show images="images"></div>-->
+        </div>
+
+        <div custom-layout>
+            <div id="welcome">
+                {% include 'index/welcome.html' %}
+            </div>
+
+            <div id="values">
+                {% include 'index/values.html' %}
+            </div>
+
+            <div id="testemonials">
+                {% include 'index/testemonials.html' %}
+            </div>
+
+            <!-- About YiSport -->
+            <div id="about" class="container-fluid">
+                <h1 style="text-align: center; padding-bottom: 50px;">About Yi Sport Taekwondo</h1>
+                <div class="row">
+                    <div
+                            {% if g.user.is_authenticated %}
+                                edit-field tag="text" title="about" model="aboutYiSport"
+                            {% endif %}>
+                        <p ng-bind="aboutYiSport"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lionel Lee -->
+            <div class="container-fluid">
+                {% include 'about/lionelLee.html' %}
+            </div>
+
+            <!-- Sara Gray -->
+            <div class="container-fluid">
+                {% include 'about/saraGray.html' %}
+            </div>
+
+{#            <!-- Khalil Butler -->#}
+{#            <div class="container-fluid">#}
+{#                {% include 'about/khalilButler.html' %}#}
+{#            </div>#}
+{##}
+{#            <!-- Isaak Boyance -->#}
+{#            <div class="container-fluid">#}
+{#                {% include 'about/isaakBoyance.html' %}#}
+{#            </div>#}
+
+            <div id="news">
+                {% include 'index/news.html' %}
+            </div>
+
+            <div id="contact">
+                {% include 'index/program.html' %}
+            </div>
+        </div>
+
+        <div>
+            {% include 'index/map.html' %}
+        </div>
     </div>
-
-    <div custom-layout>
-      <div ID="welcome">
-        {% include 'index/welcome.html' %}
-      </div>
-
-      <div id="values">
-        {% include 'index/values.html' %}
-      </div>
-
-      <div id="testemonials">
-        {% include 'index/testemonials.html' %}
-      </div>
-
-      <div id="news">
-        {% include 'index/news.html' %}
-      </div>
-
-      <div id="contact">
-        {% include 'index/program.html' %}
-      </div>
-    </div>
-
-    <div>
-      {% include 'index/map.html' %}
-    </div>
-  </div>
 
 {% endblock %}

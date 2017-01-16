@@ -40,10 +40,10 @@
         </button>
         <div class="navbar-brand nav-img"
         style="min-height: 50px;display: flex;align-items: center;">
-          <img onclick="followLink('/')" width="60px"
+          <a class="smoothScroll" href="#"> <img width="60px"
             style="padding-right: 15px"
-            src="{{ url_for('static', filename="images/transparent_logo.png") }}">
-          <a class="navbar-brand" onclick="followLink('/')">YI SPORT</a>
+            src="{{ url_for('static', filename="images/transparent_logo.png") }}"></a>
+{#          <a class="navbar-brand" onclick="followLink('/')">YI SPORT</a>#}
         </div>
       </div>
       <div id="myNavbar" class="collapse navbar-collapse">
@@ -54,6 +54,9 @@
             </li>
             <li>
               <a class="smoothScroll" id="valueNav" href="/#values">VALUES</a>
+            </li>
+            <li>
+              <a class="smoothScroll" id="valueNav" href="/#about">ABOUT</a>
             </li>
             <li>
               <a class="smoothScroll" id="newsNav" href="/#news">NEWS</a>

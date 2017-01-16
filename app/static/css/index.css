@@ -1,11 +1,87 @@
 .jumbotron {
-    color: #ffffff;
-    padding: 20px 25px;
     margin-bottom: 0;
-    height: 70vh;
-    background-position: center 10%;
     background-size: cover;
-    padding: 15%;
+    padding-top: 8%;
+    padding-bottom: 20%;
+    color: #8C489F;
+    text-align: center;
+}
+
+.jumbotron img {
+    display: block;
+    margin: auto;
+}
+
+.banner_menu_button {
+    padding-top:20%;
+}
+
+.banner_menu_button .glyphicon {
+    font-size:300%;
+    color:#8C489F;
+    display: block;
+}
+
+.banner_inner_container {
+    margin:0 auto;
+    display: inline-block;
+    padding:1%;
+    border-radius: 5px;
+    background-color: rgba(230, 230, 230, 0.8);
+}
+
+.banner_buttons {
+    margin:0 auto;
+    text-align: center;
+    margin-top: 5%;
+}
+
+.banner_buttons a{
+    margin: 5%;
+    color: black;
+    font-size:150%;
+}
+
+.banner_title {
+    text-align: center;
+    color: #8C489F;
+    font-size: 7em;
+    font-family: "Lucida Grande";
+    letter-spacing: 4px;
+    color: #8C489F;
+}
+
+@media only screen and (max-width: 1300px) {
+    .banner_title {
+        font-size: 5em;
+    }
+
+    .banner_buttons a{
+        font-size:130%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .banner_title {
+        font-size: 3em;
+    }
+
+    .banner_buttons a{
+        font-size:100%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .banner_title {
+        font-size: 1em;
+    }
+
+    .banner_buttons a{
+        font-size:80%;
+    }
+}
+
+.banner_container {
     margin-top: 50px;
 }
 
@@ -54,7 +130,7 @@
 }
 
 h1 {
-    font-family: Impact;
+    font-family: Lucida Grande;
     letter-spacing: 4px;
     color: #8C489F;
 }
@@ -127,6 +203,12 @@ textarea {
 }
 
 .pics-container {
+    max-width:  600px;
+    max-height: 600px;
+    overflow: hidden;
+}
+
+.pics-container2 {
     max-width:  600px;
     max-height: 600px;
     background-repeat:   no-repeat;

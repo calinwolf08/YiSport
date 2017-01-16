@@ -8,14 +8,14 @@
       class="container-fluid">
       <p ng-bind="welcomeText"></p>
     </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <a class="myBtn btn btn-primary btn-lg btn-block" href="{{ url_for('about') }}">About Us!</a>
-      </div>
-      <div class="col-sm-6">
-        <a class="myBtn btn btn-primary btn-lg btn-block smoothScroll" href="#contact">Sign Up!</a>
-      </div>
-    </div>
+{#    <div class="row">#}
+{#      <div class="col-sm-6">#}
+{#        <a class="myBtn btn btn-primary btn-lg btn-block" href="{{ url_for('about') }}">About Us!</a>#}
+{#      </div>#}
+{#      <div class="col-sm-6">#}
+{#        <a class="myBtn btn btn-primary btn-lg btn-block smoothScroll" href="#contact">Sign Up!</a>#}
+{#      </div>#}
+{#    </div>#}
   </div>
   <div class="col-sm-6">
     <div
@@ -23,8 +23,8 @@
         edit-field tag="image" title="welcome" model="welcomeImg"
       {% endif %}
       class="pics-container slideanim">
-      <img ng-src="{% raw %}{{ welcomeImg }}{% endraw %}"
-           class="my-img img-rounded img-responsive"/>
+        <img ng-src="{% raw %}{{ welcomeImg }}{% endraw %}"
+           class="img-rounded img-responsive"/>
     </div>
   </div>
 </div>

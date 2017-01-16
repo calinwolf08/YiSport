@@ -290,7 +290,7 @@ function editField(postsService) {
                                     scope.posts[0].text = scope.originalModel;
                                     scope.toggleSelected(0);
                                 });
-                        } else if (scope.textField && scope.testemonialField) {
+                        } else if (scope.textField || scope.testemonialField) {
                             scope.posts.splice(0, i);
                             scope.toggleSelected(0);
                         } else if (scope.slideshowField) {
