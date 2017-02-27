@@ -2,7 +2,7 @@ from peewee import *
 import datetime
 # from pprint import pprint
 
-db = MySQLDatabase('yisport', user="calin", password="")
+db = MySQLDatabase('yisport', user="root", password="cwwashin")
 
 """
 create slideshow table with fk to images
@@ -74,12 +74,13 @@ class PagePost(Model):
 
 if __name__ == '__main__':
     db.connect()
-    db.drop_tables([SlideShowImage], safe=True)
-    db.create_tables([SlideShowImage], safe = True)
-    # User(email='admin', password='admin').save()
+    # db.drop_tables([SlideShowImage], safe=True)
+    # db.create_tables([SlideShowImage], safe = True)
 
     # db.drop_tables([User, Image, SlideShowImage, BlogPost, PagePost], safe = True)
     # db.create_tables([User, Image, SlideShowImage, BlogPost, PagePost], safe = True)
+    #
+    # User(email='admin', password='admin').save()
     #
     # Image(path="static/images/post/bow.jpg", type="post").save()
     # Image(path="static/images/post/kick.jpg", type="post").save()
@@ -90,11 +91,11 @@ if __name__ == '__main__':
     # Image(path="static/images/transparent_logo_name.png", type="logo").save()
     # Image(path="static/images/yisporttkd_logo1.jpg", type="logo").save()
     #
-
+    #
     # PagePost(page="index", title="banner", tag="image",
     #          text = "static/images/post/pose.jpg",
     #          active = "true").save()
-
+    #
     # PagePost(page="index", title="welcome", tag="text",
     #          text="welcome to yisport tkd welcome to yisport tkd welcome to yisport tkd",
     #          active="true").save()
@@ -125,7 +126,7 @@ if __name__ == '__main__':
     # PagePost(page="index", title="testemonial", tag="testemonial",
     #          text="Definitively the best TKD school in Washington. Not just for Sport TKD but for conditioning of the mind and body for kids. One of my favorite aspects of the training are the life lessons that are taught at the end of every class. Respect, confidence, motivation, and self belief are the core teachings at Yi Sport TKD.",
     #          active="true", author="Gene Shin").save()
-
+    #
     # SlideShowImage(image=1, active=True).save()
     # SlideShowImage(image=2, active=True).save()
     # SlideShowImage(image=3, active=True).save()
